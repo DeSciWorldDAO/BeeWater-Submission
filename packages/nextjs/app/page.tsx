@@ -466,7 +466,7 @@ const Home: NextPage = () => {
         ];
         const uData = [
             entry?.eval[evalIndex]?.coherenceScore,
-            entry?.eval[evalIndex]?.feasibilityScore,
+            entry?.eval[evalIndex]?.feasabilityScore,
             entry?.eval[evalIndex]?.innovationScore,
             entry?.eval[evalIndex]?.funScore
         ];
@@ -488,7 +488,7 @@ const Home: NextPage = () => {
                         ))}</li>
                         <li>Fun Score: {entry?.eval[evalIndex]?.funScore}</li>
                         <li>Innovation Score: {entry?.eval[evalIndex]?.innovationScore}</li>
-                        <li>Feasibility: {entry?.eval[evalIndex]?.feasabilityScore}</li>
+                        <li>Feasibility: {entry?.eval[evalIndex]?.feasibilityScore}</li>
                         <li>Coherence Score: {entry?.eval[evalIndex]?.coherenceScore}</li>
                     </div>
 

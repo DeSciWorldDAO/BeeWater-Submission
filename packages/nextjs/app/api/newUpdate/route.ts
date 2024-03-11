@@ -11,7 +11,9 @@ import { MongoClient } from "mongodb";
 import { ChatMessage, MessageContent, OpenAI, serviceContextFromDefaults } from "llamaindex";
 import { createChatEngine } from "../chat/engine";
 
-const url = 'mongodb+srv://At0x:r8MzJR2r4A1xlMOA@cluster1.upfglfg.mongodb.net/?retryWrites=true&w=majority'
+
+
+const url = process.env.MONGODB_URL || 'mongodb+srv://At0x:r8MzJR2r4A1xlMOA@cluster2.8l2zh.mongodb.net/?retryWrites=true&w=majority'
 
 const client = new MongoClient(url);
 await client.connect();
@@ -127,8 +129,8 @@ export async function POST(request: Request) {
 
     // Proceed with storing the enhanced proposal in MongoDB or returning it in the response
     //
-    const db = client.db("aiUniverse"); // Connect to the database
-    const hackCodex = db.collection('hackerUniverse'); // 
+    const db = client.db("nerdWorkState"); // Connect to the database
+    const hackCodex = db.collection('nerdWork'); // 
 
     // assumed input
 

@@ -16,7 +16,8 @@ import { Db, MongoClient } from "mongodb";
 // Assuming we've defined or imported types for the Hackathon Application
 import type { AIEvaluation, HackathonEntry } from "~~/types/dbSchema";
 
-const url = "mongodb+srv://At0x:r8MzJR2r4A1xlMOA@cluster1.upfglfg.mongodb.net/?retryWrites=true&w=majority";
+
+const url = process.env.MONGODB_URL || 'mongodb+srv://At0x:r8MzJR2r4A1xlMOA@cluster2.8l2zh.mongodb.net/?retryWrites=true&w=majority'
 
 const client = new MongoClient(url);
 await client.connect();
