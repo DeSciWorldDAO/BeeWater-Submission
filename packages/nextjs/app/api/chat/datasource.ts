@@ -12,9 +12,9 @@ const client = new MongoClient(url);
 await client.connect();
 console.log('Connected successfully to server');
 // Database Name
-const dbName = 'aiUniverse';
-const indexName = "hacker_index"
-const collectionName = "hackerIndex"
+const dbName = 'nerdWorkState';
+const indexName = "nerd_index"
+const collectionName = "nerdIndex"
 
 
 export async function getDataSource(

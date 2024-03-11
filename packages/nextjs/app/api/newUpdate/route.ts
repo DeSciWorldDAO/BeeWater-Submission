@@ -20,9 +20,9 @@ await client.connect();
 async function llamaindex(payload: string, id: string) {
     const vectorStore = new MongoDBAtlasVectorSearch({
         mongodbClient: client,
-        dbName: "aiUniverse",
-        collectionName: "hackerIndex", // this is where your embeddings will be stored
-        indexName: "hacker_index", // this is the name of the index you will need to create
+        dbName: "nerdWorkState",
+        collectionName: "nerdIndex", // this is where your embeddings will be stored
+        indexName: "nerd_index", // this is the name of the index you will need to create
     });
 
     // now create an index from all the Documents and store them in Atlas

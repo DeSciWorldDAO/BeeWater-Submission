@@ -15,8 +15,8 @@ import {
 
 // Load environment variables from local .env file
 
-const databaseName = "aiUniverse";
-const collectionName = "bookStore";
+const databaseName = "nerdWorkState";
+const collectionName = "nerdWork";
 
 
 
@@ -53,8 +53,8 @@ async function importPDFToMongo() {
     const dbdocuments = await reader.loadData(databaseName, collectionName, [
         "full_text",
     ]);
-    const vectorCollectionName = "hackerIndex";
-    const indexName = "hacker_index";
+    const vectorCollectionName = "nerdIndex";
+    const indexName = "nerd_index";
 
     // create Atlas as a vector store
     const vectorStore = new MongoDBAtlasVectorSearch({

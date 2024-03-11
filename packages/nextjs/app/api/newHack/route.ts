@@ -25,9 +25,9 @@ await client.connect();
 async function llamaindex(payload: string, id: string) {
     const vectorStore = new MongoDBAtlasVectorSearch({
         mongodbClient: client,
-        dbName: "aiUniverse",
-        collectionName: "hackerIndex", // this is where your embeddings will be stored
-        indexName: "hacker_index", // this is the name of the index you will need to create
+        dbName: "nerdWorkState",
+        collectionName: "nerdIndex", // this is where your embeddings will be stored
+        indexName: "nerd_index", // this is the name of the index you will need to create
     });
 
     // now create an index from all the Documents and store them in Atlas
@@ -42,8 +42,8 @@ async function llamaindex(payload: string, id: string) {
     const result = await VectorStoreIndex.fromDocuments([document], { storageContext });
     const embeddingResults = await result.getNodeEmbeddingResults([document]);
     console.log({ result, embeddingResults });
-    const db = client.db("aiUniverse"); // Connect to the database
-    const hackIndex = db.collection("hackerIndex");
+    const db = client.db("nerdWorkState"); // Connect to the database
+    const hackIndex = db.collection("nerdIndex");
 
     const embedding = await hackIndex.findOne({ "metadata.doc_id": id });
 
@@ -172,8 +172,8 @@ export async function POST(request: Request) {
 
         // Proceed with storing the enhanced proposal in MongoDB or returning it in the response
         //
-        const db = client.db("aiUniverse"); // Connect to the database
-        const hackCodex = db.collection("hackerUniverse"); //
+        const db = client.db("nerdWorkState"); // Connect to the database
+        const hackCodex = db.collection("nerdWork"); //
         // assumed input
         // run this function asynchronously, do not block for it to finish
         runLlamaAndStore(db, hackathonApp, enhancedProposal, usedEmbeddingIds, messages, response, evaluation);

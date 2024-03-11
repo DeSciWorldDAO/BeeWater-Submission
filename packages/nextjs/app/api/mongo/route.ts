@@ -16,10 +16,10 @@ export async function GET(req: Request) {
     try {
         const client = await clientPromise;
 
-        const db = client.db("aiUniverse"); // Connect to the Database
+        const db = client.db("nerdWorkState"); // Connect to the Database
 
         aiu = await db
-            .collection("hackerUniverse")
+            .collection("nerdWork")
             .find({ address: param })
             .limit(50)
             .toArray();
