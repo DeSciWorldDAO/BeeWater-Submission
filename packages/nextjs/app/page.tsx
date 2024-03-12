@@ -564,7 +564,7 @@ const Home: NextPage = () => {
                 </div>
 
                 <div className='absolute left-[6%] top-[29%] w-[52%]'>
-                    <span className="relative text-2xl -top-14 left-6 text-yellow-500"> <strong>Project: {entry.hack.projectName}</strong ></span>
+                    <span className="relative sm:text-md md:text-lg lg:text-xl xl:text-2xl sm:-top-9 md:-top-10 lg:-top-12 xl:-top-14 left-6 text-yellow-500"> <strong>Project: {entry.hack.projectName}</strong ></span>
                     <EvaluationDetails entry={entry} evalIndex={evalIndex} />
                 </div>
 
