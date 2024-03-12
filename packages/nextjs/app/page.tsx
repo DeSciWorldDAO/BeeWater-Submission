@@ -439,7 +439,7 @@ const Home: NextPage = () => {
     (
         <div className="">
             <ul>
-                <span className='text-2xl'>
+                <span className='sm:text-lg md:text-xl lg:text-2xl xl:text-2xl'>
                     <strong>
                         Project Details:<br /><br />
                         {entry?.hack?.projectName}</strong>
@@ -483,7 +483,7 @@ const Home: NextPage = () => {
                             className={"relative"}
                         >
                     <ul>
-                        <span className="text-2xl"> <strong>Evaluation Details:<br /><br /></strong ></span>
+                        <span className=" sm:text-lg md:text-xl lg:text-2xl xl:text-2xl"> <strong>Evaluation Details:<br /><br /></strong ></span>
                         
                             <li>Evaluation Comments: {entry?.eval[evalIndex]?.evaluationRemarks}</li>
                             <li>Code Snippets: {entry?.eval[evalIndex]?.codeSnippets?.map((snippet: CodeEntry, i: number) => (<>
