@@ -552,12 +552,13 @@ const Home: NextPage = () => {
                     </button>
                 </div>
 
-                <div className='absolute left-[18%] top-[66%] w-[33%]'>
-                    <ul className=''>
-                        <button className=" w-[120px] h-[50px] bg-no-repeat bg-[url(/assets/btn.png)]" onClick={() => evalHandler()}>
-                        </button>
-                        <span className="relative">Next||Prev</span>
-                        <button className="bottom-20 w-[120px] h-[50px] bg-no-repeat bg-[url(/assets/btn.png)]" onClick={() => evalHandler()}>
+                <div className='absolute left-[20%] top-[64%] w-[33%]'>
+                    <ul className=''>                      
+                        <button className="font-bold sm:w-[70px] md:w-[80px] lg:w-[95px] xl:w-[95px] sm:h-[35px] md:h-[40px] lg:h-[47.5px] xl:h-[47.5px] bg-no-repeat bg-[url(/assets/btn.png)] bg-contain" onClick={() => evalHandler()}>
+                        NEXT
+                        </button>                     
+                        <button className="font-bold sm:w-[70px] md:w-[80px] lg:w-[95px] xl:w-[95px] sm:h-[35px] md:h-[40px] lg:h-[47.5px] xl:h-[47.5px] bg-no-repeat bg-[url(/assets/btn.png)] bg-contain" onClick={() => evalHandler()}>
+                        PREV
                         </button>
                     </ul>
                 </div>
