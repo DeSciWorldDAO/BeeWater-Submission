@@ -595,8 +595,10 @@ const Home: NextPage = () => {
                         </div>
                     </div>
                 </div>
-                <div className="absolute right-[7%] top-[12.5%] w-[33%]">
-                    <div className="bg-[url(/assets/desciLogo.png)] bg-contain h-[140px] w-[140px] bg-no-repeat"></div>
+                <div className="absolute right-[9.7%] top-[11%] w-[33%]">
+                    <div className="bg-[url(/assets/desciLogo.png)] bg-contain sm:h-[60px] md:h-[80px] lg:h-[100px] xl:h-[120px] sm:w-[60px] md:w-[80px] lg:w-[100px] xl:w-[120px] bg-no-repeat"></div>
+                </div>
+                <div className="absolute right-[7%] top-[30%] w-[33%]">
                     <ChatSection />
                 </div>
             </div>
