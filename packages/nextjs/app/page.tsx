@@ -574,7 +574,7 @@ const Home: NextPage = () => {
                     <label className="relative left-[0%] top-[50%] text-sm text-white">Next Entry</label>
                 </button>
 
-                <div className="absolute left-[1.5%] top-[69%] w-[47%] bg-[url(/assets/banner2.png)]  bg-no-repeat bg-cover z-20">
+                <div className="absolute left-[3.8%] top-[69%] sm:w-[45%] md:w-[45%] lg:w-[45%] xl:w-[45%] bg-[url(/assets/banner2.png)] bg-no-repeat bg-contain z-20">
                     <div className="">
                         {renderTabContent()}
 
