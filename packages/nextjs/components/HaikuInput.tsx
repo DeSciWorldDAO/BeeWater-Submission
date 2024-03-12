@@ -109,9 +109,8 @@ const HaikuInput = () => {
                 // Unix timestamp of when attestation expires. (0 for no expiration)
                 expirationTime: BigInt(0),
                 // Unix timestamp of current time
-                time: BigInt(1671219636),
+                time: BigInt(Date.now()),
                 revocable: true, // Be aware that if your schema is not revocable, this MUST be false
-                nonce: BigInt(0),
                 schema: schemaUID,
                 refUID: '0x0000000000000000000000000000000000000000000000000000000000000000',
                 data: encodedData,

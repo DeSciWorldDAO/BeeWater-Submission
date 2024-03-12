@@ -58,7 +58,6 @@ async function runLlamaAndStore(
     db: Db,
     usedEmbeddingIds: string[],
     promptMessages: any,
-    promptResponse: any,
     haikipu: Haikipu,
 ) {
     const haikuId = haikipu._id;
@@ -70,7 +69,6 @@ async function runLlamaAndStore(
         promptMessages,
         embeddingId,
         usedEmbeddingIds,
-        promptResponse,
     );
     const usageResult = await storeUsageByEmbeddingId(db, haikuId, embeddingId, usedEmbeddingIds);
     const evaluationResult = await storeEvaluationByProject(db, haikuId, usedEmbeddingIds, embeddingId, haikipu);
@@ -86,12 +84,12 @@ async function generateHackathonProposal(haikiput: Haikipu) {
     const messages: ChatMessage[] = [
         {
             role: "system",
-            content: `You are a coordination engine. Your role is to encode the semantic load of the provided context into haikipus which are a data object focused on coordination. You will recieve a context summary and must encode a haiku with the semantic load which aims to foster coordination and an a connection with the meta-context for the haiku which are coherent to the data available to you. Respond in JSON format with the Haikipu type`
+            content: `You are a coordination engine. Your role is to encode the semantic load of the provided context into haikipus which are a data object focused on coordination. You will recieve a context summary and must encode a haiku with the semantic load which aims to foster coordination and an a connection with the meta-context which relates other haikipus to the haiku. Prioritize  coherence to the data available to you. Respond in JSON format with the Haikipu type`
         },
         {
             role: "assistant",
             content: `
-            haikipu:Haikipu= {
+            type Haikipu = {
             haiku: string;
             contextConnection: string;
                 }
@@ -147,7 +145,7 @@ async function generateHackathonProposal(haikiput: Haikipu) {
         explainer: parsedResponse.contextConnection,
     };
 
-    return { haikipu, messages, response: parsedResponse, usedEmbeddingIds };
+    return { haikipu, messages, usedEmbeddingIds };
 }
 
 // Example usage for POST handler or another part of your application
@@ -155,7 +153,7 @@ export async function POST(request: Request) {
     try {
         const haikiput: Haikipu = await request.json(); // Assuming the request body is properly formatted
         console.log(haikiput);
-        const { usedEmbeddingIds, messages, response, haikipu } = await generateHackathonProposal(
+        const { usedEmbeddingIds, messages, haikipu } = await generateHackathonProposal(
             haikiput,
         );
 
@@ -167,7 +165,7 @@ export async function POST(request: Request) {
         const hackCodex = db.collection("nerdWork"); //
         // assumed input
         // run this function asynchronously, do not block for it to finish
-        runLlamaAndStore(db, usedEmbeddingIds, messages, response, haikipu);
+        runLlamaAndStore(db, usedEmbeddingIds, messages, haikipu);
 
         await hackCodex.updateOne(
             {
