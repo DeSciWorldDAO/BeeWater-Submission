@@ -582,11 +582,11 @@ const Home: NextPage = () => {
 
                         <div className="flex flex-row relative">
                             <ul className=''>
-                                <button onClick={handleAddTech} className=" absolute left-[30%] h-[50px] w-[100px] bottom-10 bg-cover bg-no-repeat text-xs bg-[url(/assets/button.png)]">
+                                <button onClick={handleAddTech} className=" absolute left-[10%] top-[30%] sm:h-[10px] md:h-[30px] lg:h-[40px] xl:h-[60px] sm:w-[20px] md:w-[60px] lg:w-[80px] xl:w-[120px] bg-cover bg-no-repeat text-sm bg-[url(/assets/button.png)]">
                                     <label className="relative -top-2"> Add Tech</label>
                                 </button>
                                 <br />
-                                <button onClick={handleAddTeamMember} className=" absolute left-[70%] h-[60px] bg-cover bg-no-repeat w-[120px] text-xs bottom-10 bg-[url(/assets/button.png)]">
+                                <button onClick={handleAddTeamMember} className=" absolute left-[36%] top-[30%]  sm:h-[10px] md:h-[30px] lg:h-[40px] xl:h-[60px] sm:w-[20px] md:w-[60px] lg:w-[80px] xl:w-[120px] bg-cover bg-no-repeat  text-sm bg-[url(/assets/button.png)]">
                                     <label className="relative -top-0"> Add Member</label>
                                 </button>
                                 <br />
