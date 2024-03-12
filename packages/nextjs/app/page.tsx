@@ -436,9 +436,8 @@ const Home: NextPage = () => {
     // Then use this in your return statement to dynamically show the content
 
     const ProjectDetails = ({ entry, evalIndex }: { entry: any, evalIndex: number }) =>
-
     (
-        <div className=" p-6">
+        <div className="">
             <ul>
                 <span className='text-2xl'>
                     <strong>
@@ -475,12 +474,13 @@ const Home: NextPage = () => {
         return (
 
             <div className="flex flex-row items-start justify-between relative">
-                <div className="absolute w-[35%] bg-white border-4  min-h-[300px] h-full overflow-y-scroll overflow-x-hidden">
+                <div className="absolute w-[35%] bg-white bg-opacity-50 border-4 sm:max-h-[50px] md:max-h-[100px] lg:max-h-[160px] xl:max-h-[250px] overflow-y-scroll overflow-x-hidden">
                     <ProjectDetails entry={entry} evalIndex={evalIndex} />
                 </div>
-                <div className="absolute left-[40%] w-[35%] min-h-[300px] h-full overflow-y-scroll overflow-x-hidden">
+
+                <div className="absolute left-[40%] w-[35%] bg-white bg-opacity-50 border-4 sm:max-h-[50px] md:max-h-[100px] lg:max-h-[160px] xl:max-h-[250px] overflow-y-scroll overflow-x-hidden">
                     <div
-                            className={"relative border-4 p-4 bg-white -backdrop-hue-rotate-180"}
+                            className={"relative"}
                         >
                     <ul>
                         <span className="text-2xl"> <strong>Evaluation Details:<br /><br /></strong ></span>
