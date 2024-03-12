@@ -478,12 +478,12 @@ const Home: NextPage = () => {
                 <div className="absolute w-[35%] bg-white border-4  min-h-[300px] h-full overflow-y-scroll overflow-x-hidden">
                     <ProjectDetails entry={entry} evalIndex={evalIndex} />
                 </div>
-                <div className="absolute left-[40%] w-[35%] p-6 min-h-[300px] h-full overflow-auto">
+                <div className="absolute left-[40%] w-[35%] min-h-[300px] h-full overflow-y-scroll overflow-x-hidden">
                     <div
                             className={"relative border-4 p-4 bg-white -backdrop-hue-rotate-180"}
                         >
                     <ul>
-                        <span className="text-2xl"> <strong>Evaluation Details:</strong ></span>
+                        <span className="text-2xl"> <strong>Evaluation Details:<br /><br /></strong ></span>
                         
                             <li>Evaluation Comments: {entry?.eval[evalIndex]?.evaluationRemarks}</li>
                             <li>Code Snippets: {entry?.eval[evalIndex]?.codeSnippets?.map((snippet: CodeEntry, i: number) => (<>
