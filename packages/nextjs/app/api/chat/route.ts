@@ -25,7 +25,7 @@ const convertMessageContent = (
         },
     ];
 };
-export const maxDuration = 60; // This function can run for a maximum of 5 seconds
+export const maxDuration = 120; // This function can run for a maximum of 5 seconds
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json();
@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
 
         const systemMessage: ChatMessage = {
             role: "system",
-            content: `You are a coordination engine. Your context has haikus with encoded semantic loads you must parse as actionable items for users. Your goal is to foster maximum coordination.`,
+            content: `You are an AI coordination engine. Your context has haikus with encoded semantic loads you must parse as actionable items for users. Decode the haikus into natural language. Your goal is to foster maximum coordination between the user and the context.`,
         }
 
         messages.push(systemMessage);
