@@ -591,7 +591,7 @@ const Home: NextPage = () => {
                                 </button>
                                 <br />
                                 {/* Submit Button */}
-                                <button className="absolute left-[88%] bottom-6 h-[100px] w-[100px] bg-contain mt-5 bg-[url(/assets/submit.png)] bg-no-repeat" onClick={handleSubmit}>
+                                <button className="absolute sm:left-[85%] sm:bottom-[150%] md:left-[80%] md:bottom-[100%] lg:left-[75%] lg:bottom-[80%] xl:left-[75%] xl:bottom-[75%]  sm:h-[20px] md:h-[60px] lg:h-[80px] xl:h-[100px] xl:w-[100px] sm:w-[20px] md:w-[60px] lg:w-[80px] xl:w-[100px] bg-contain mt-5 bg-[url(/assets/submit.png)] bg-no-repeat" onClick={handleSubmit}>
                                     <label className="relative top-4">submit</label>
                                 </button>
                             </ul>
