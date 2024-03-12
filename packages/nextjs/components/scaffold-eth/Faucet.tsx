@@ -9,6 +9,7 @@ import { Address, AddressInput, Balance, EtherInput } from "~~/components/scaffo
 import { useTransactor } from "~~/hooks/scaffold-eth";
 import { getParsedError, notification } from "~~/utils/scaffold-eth";
 import DailyLog from "../dailyLog";
+import HaikuInput from "~~/components/HaikuInput";
 
 // Account index to use from generated hardhat accounts.
 const FAUCET_ACCOUNT_INDEX = 0;
@@ -65,23 +66,16 @@ export const Faucet = () => {
             </label>
             <input type="checkbox" id="faucet-modal" className="modal-toggle" />
             <label htmlFor="faucet-modal" className="modal cursor-pointer">
-                <label className="modal-box relative">
+                <label className="modal-box relative bg-[url(/assets/green.png)] bg-cover bg-no-repeat ">
                     {/* dummy input to capture event onclick on modal box */}
                     <input className="h-0 w-0 absolute top-0 left-0" />
-                    <h3 className="text-xl font-bold mb-3">NerdWorkState</h3>
-                    <label htmlFor="faucet-modal" className="btn btn-ghost btn-sm btn-circle absolute right-3 top-3">
+                    <label htmlFor="faucet-modal" className="btn btn-ghost btn-sm btn-circle absolute right-3 top-6">
                         ✕
                     </label>
-                    <div className="space-y-3">
-                        <div className="flex space-x-4">
-                            <div>
-                                <DailyLog />
+                    <HaikuInput />
 
-                            </div>
 
-                        </div>
 
-                    </div>
                 </label>
             </label>
         </div>

@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
 
         const systemMessage: ChatMessage = {
             role: "system",
-            content: `You are an AI consultant specializing in hackathon project conceptualization. Ponder on the different aspects of the projects available and help coordinate the hackers to build something interesting.`,
+            content: `You are a coordination engine. Your context has haikus with encoded semantic loads you must parse as actionable items for users. Your goal is to foster maximum coordination.`,
         }
 
         messages.push(systemMessage);

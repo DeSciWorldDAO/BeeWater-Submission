@@ -1,12 +1,12 @@
 import { Db } from "mongodb";
-import { AIEvaluation } from "~~/types/dbSchema";
+import { AIEvaluation, Haikipu } from "~~/types/dbSchema";
 
 export async function storeEvaluationByProject(
     db: Db,
     projectId: string,
     usedEmbeddings: string[],
     embeddingId: string,
-    evaluation: AIEvaluation,
+    haikipu: Haikipu
 ) {
     const hackCodex = db.collection("nerdWork");
     const evaluations = db.collection("evaluations");
@@ -14,7 +14,7 @@ export async function storeEvaluationByProject(
     const evaluationData = {
         projectId,
         usedEmbeddings,
-        evaluation,
+        haikipu,
         embeddingId,
     };
 
@@ -26,5 +26,5 @@ export async function storeEvaluationByProject(
 
     const evalResult = await evaluations.insertOne(evaluationData);
 
-    return { evaluation, result: evalResult, addEvalResult };
+    return { haikipu, result: evalResult, addEvalResult };
 }

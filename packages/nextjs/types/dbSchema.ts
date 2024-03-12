@@ -7,6 +7,21 @@ export type HackathonEntry = {
     progressUpdates: ProgressUpdate[];
 };
 
+export type Haikipu = {
+    _id: string,
+    address: string,
+    title: string,
+    option: string,
+    contextSummary: string,
+    haiku: string,
+    explainer: string,
+};
+
+export type canvas = {
+    node: [{ id: string, x: number, y: number, type: string, content: string }],
+    edge: [{ id: string, source: string, target: string, type: string }]
+}
+
 // Team Member
 export type TeamMember = {
     name: string;

@@ -2,7 +2,7 @@ const DailyLog = () => {
     return (
 
 
-        <div className="bg-white text-gray-800">
+        <div className="text-gray-800">
             <div className="container mx-auto p-8">
                 <div className="max-w-2xl mx-auto bg-gray-100 p-6 rounded-lg shadow">
                     <div className="mb-4">
