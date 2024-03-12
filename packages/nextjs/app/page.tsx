@@ -440,7 +440,7 @@ const Home: NextPage = () => {
     (
         <div className=" p-6">
             <ul>
-                <span className=''>
+                <span className='text-2xl'>
                     <strong>
                         Project Details:<br /><br />
                         {entry?.hack?.projectName}</strong>
@@ -479,21 +479,24 @@ const Home: NextPage = () => {
                     <ProjectDetails entry={entry} evalIndex={evalIndex} />
                 </div>
                 <div className="absolute left-[40%] w-[35%] p-6 min-h-[300px] h-full overflow-auto">
-                    <span className="text-2xl"> <strong>Evaluation Details:</strong ></span>
                     <div
-                        className={"relative border-4 p-4 bg-white -backdrop-hue-rotate-180"}
-                    >
-                        <li>Evaluation Comments: {entry?.eval[evalIndex]?.evaluationRemarks}</li>
-                        <li>Code Snippets: {entry?.eval[evalIndex]?.codeSnippets?.map((snippet: CodeEntry, i: number) => (<>
-                            <li key={i}><strong>{snippet.code}</strong></li>
-                            <li key={i}><strong>{snippet.comment}</strong></li></>
-                        ))}</li>
-                        <li>Fun Score: {entry?.eval[evalIndex]?.funScore}</li>
-                        <li>Innovation Score: {entry?.eval[evalIndex]?.innovationScore}</li>
-                        <li>Feasibility: {entry?.eval[evalIndex]?.feasibilityScore}</li>
-                        <li>Coherence Score: {entry?.eval[evalIndex]?.coherenceScore}</li>
+                            className={"relative border-4 p-4 bg-white -backdrop-hue-rotate-180"}
+                        >
+                    <ul>
+                        <span className="text-2xl"> <strong>Evaluation Details:</strong ></span>
+                        
+                            <li>Evaluation Comments: {entry?.eval[evalIndex]?.evaluationRemarks}</li>
+                            <li>Code Snippets: {entry?.eval[evalIndex]?.codeSnippets?.map((snippet: CodeEntry, i: number) => (<>
+                                <li key={i}><strong>{snippet.code}</strong></li>
+                                <li key={i}><strong>{snippet.comment}</strong></li></>
+                            ))}</li>
+                            <li>Fun Score: {entry?.eval[evalIndex]?.funScore}</li>
+                            <li>Innovation Score: {entry?.eval[evalIndex]?.innovationScore}</li>
+                            <li>Feasibility: {entry?.eval[evalIndex]?.feasibilityScore}</li>
+                            <li>Coherence Score: {entry?.eval[evalIndex]?.coherenceScore}</li>
+                        
+                    </ul>
                     </div>
-
                     {/* <div className="relative">
                         <BarChart
                             width={300}
@@ -547,13 +550,8 @@ const Home: NextPage = () => {
                             Update
                         </label>
                     </button>
-                    <button
-                        className="relative bottom-6 h-[120px] w-[120px] bg-[url(/assets/nextProject.png)] bg-contain bg-no-repeat"
-                        onClick={() => indexHandler()}>
-                        <label className="relative top-10 left-10 text-sm">Next Entry</label>
-                    </button>
-
                 </div>
+
                 <div className='absolute left-[18%] top-[66%] w-[33%]'>
                     <ul className=''>
                         <button className=" w-[120px] h-[50px] bg-no-repeat bg-[url(/assets/btn.png)]" onClick={() => evalHandler()}>
@@ -568,6 +566,12 @@ const Home: NextPage = () => {
                     <span className="relative text-2xl -top-14 left-6 text-yellow-500"> <strong>Project: {entry.hack.projectName}</strong ></span>
                     <EvaluationDetails entry={entry} evalIndex={evalIndex} />
                 </div>
+
+                <button
+                    className="absolute left-[45%] bottom-[30%]  w-[120px] h-[120px] bg-[url(/assets/nextProject.png)] bg-contain bg-no-repeat z-45"
+                    onClick={() => indexHandler()}>
+                    <label className="relative left-[0%] top-[50%] text-sm text-white">Next Entry</label>
+                </button>
 
                 <div className="absolute left-[1.5%] top-[69%] w-[47%] bg-[url(/assets/banner2.png)]  bg-no-repeat bg-cover z-20">
                     <div className="">
@@ -588,7 +592,6 @@ const Home: NextPage = () => {
                                 </button>
                                 <br />
                             </ul>
-
                         </div>
                     </div>
                 </div>
