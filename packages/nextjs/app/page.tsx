@@ -533,19 +533,19 @@ const Home: NextPage = () => {
                     <Header />
                 </div>
 
-                <div className='flex absolute left-[25%] top-[12%] gap-10 text-sm'>
-                    <button className='h-[60px] w-[120px] bg-[url(/assets/button.png)]' onClick={() => setActiveTab('submit')}>
+                <div className='flex absolute sm:left-[25%] md:left-[20%] lg:left-[20%] xl:left-[20%] sm:top-[12%] md:top-[12%] lg:top-[13%] xl:top-[14.5%] sm:gap-10 md:gap-8 lg:gap-6 xl:gap-4 text-sm'>
+                    <button className='sm:h-[10px] md:h-[30px] lg:h-[40px] xl:h-[60px] sm:w-[20px] md:w-[60px] lg:w-[80px] xl:w-[120px] bg-[url(/assets/button.png)]' onClick={() => setActiveTab('submit')}>
                         <label className=''>
                             Submit
                         </label>
                     </button>
-                    <button className='h-[60px] w-[120px] bg-[url(/assets/button.png)]' onClick={() => setActiveTab('submit')}>
+                    <button className='sm:h-[10px] md:h-[30px] lg:h-[40px] xl:h-[60px] sm:w-[20px] md:w-[60px] lg:w-[80px] xl:w-[120px] bg-[url(/assets/button.png)]' onClick={() => setActiveTab('submit')}>
                         <label className=''>
                             <Faucet />
                         </label>
                     </button>
 
-                    <button className='h-[60px] w-[120px] bg-[url(/assets/button.png)]' onClick={() => setActiveTab('update')}>
+                    <button className='sm:h-[10px] md:h-[30px] lg:h-[40px] xl:h-[60px] sm:w-[20px] md:w-[60px] lg:w-[80px] xl:w-[120px] bg-[url(/assets/button.png)]' onClick={() => setActiveTab('update')}>
                         <label className=''>
                             Update
                         </label>
