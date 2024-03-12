@@ -568,7 +568,7 @@ const Home: NextPage = () => {
                 </div>
 
                 <button
-                    className="absolute left-[45%] bottom-[30%]  w-[120px] h-[120px] bg-[url(/assets/nextProject.png)] bg-contain bg-no-repeat z-45"
+                    className="absolute left-[45%] bottom-[30%] sm:h-[60px] md:h-[80px] lg:h-[100px] xl:h-[120px] sm:w-[60px] md:w-[80px] lg:w-[100px] xl:w-[120px] bg-[url(/assets/nextProject.png)] bg-contain bg-no-repeat"
                     onClick={() => indexHandler()}>
                     <label className="relative left-[0%] top-[50%] text-sm text-white">Next Entry</label>
                 </button>
