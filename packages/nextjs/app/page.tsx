@@ -14,6 +14,8 @@ import { useSigner } from "~~/utils/wagmi-utils";
 import { EAS, SchemaEncoder } from "@ethereum-attestation-service/eas-sdk";
 // Define types for your state
 import { Header } from "~~/components/Header";
+import DailyLog from "~~/components/dailyLog";
+import { Faucet } from "~~/components/scaffold-eth/Faucet";
 
 const Home: NextPage = () => {
     const { address } = useAccount();
@@ -426,8 +428,8 @@ const Home: NextPage = () => {
 
     const renderBrowseTab = () => {
         return (
-            <div>
-                {/* Contents for browsing the database */}
+            <div className="absolute">
+
             </div>
         );
     };
@@ -532,6 +534,11 @@ const Home: NextPage = () => {
                     <button className='h-[60px] w-[120px] bg-[url(/assets/button.png)]' onClick={() => setActiveTab('submit')}>
                         <label className=''>
                             Submit
+                        </label>
+                    </button>
+                    <button className='h-[60px] w-[120px] bg-[url(/assets/button.png)]' onClick={() => setActiveTab('submit')}>
+                        <label className=''>
+                            <Faucet />
                         </label>
                     </button>
 
