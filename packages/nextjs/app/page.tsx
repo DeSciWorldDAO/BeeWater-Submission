@@ -552,7 +552,7 @@ const Home: NextPage = () => {
                     </button>
                 </div>
 
-                <div className='absolute left-[20%] top-[64%] w-[33%]'>
+                <div className='absolute sm:left-[16.5%] md:left-[16.5%] lg:left-[18%] xl:left-[20%] top-[64%] w-[33%]'>
                     <ul className=''>                      
                         <button className="font-bold sm:w-[70px] md:w-[80px] lg:w-[95px] xl:w-[95px] sm:h-[35px] md:h-[40px] lg:h-[47.5px] xl:h-[47.5px] bg-no-repeat bg-[url(/assets/btn.png)] bg-contain" onClick={() => evalHandler()}>
                         NEXT
