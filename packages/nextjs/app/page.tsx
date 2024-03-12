@@ -273,9 +273,9 @@ const Home: NextPage = () => {
     const renderSubmitTab = () => {
         return (
             <div
-                className={"flex flex-row w-full items-start justify-around"}
+                className={"flex flex-row sm:w-[250px] md:w-[300px] lg:w-[400px] xl:w-[500px] sm:h-[60px] md:h-[60px] lg:h-[70px] xl:h-[120px] items-start justify-around overflow-y-scroll overflow-x-scroll sm:mt-4 md:mt-6 lg:mt-8 xl:mt-10 sm:ml-5 md:ml-5"}
             >
-                <div className={"flex flex-col mt-10"}>
+                <div className={"flex flex-col"}>
                     SUBMIT YOUR PROJECT<br />
                     <input
                         name="projectName"
@@ -318,7 +318,7 @@ const Home: NextPage = () => {
                 </div>
                 {/* Tech Input */}
 
-                <div className={"flex flex-col mt-10"}>
+                <div className={"flex flex-col"}>
                     ADD TEAM MEMBERS<br />
                     <input
                         value={teamInput}
@@ -349,7 +349,7 @@ const Home: NextPage = () => {
     const renderUpdateTab = () => {
         return (
             <div
-                className={"flex flex-row w-1/2 h-1/3 p-6"}
+                className={"flex flex-row w-1/3 h-1/3 p-6"}
             >
                 <div className={"flex flex-col mt-5"}>
                     PROGRESS UPDATE<br />
@@ -576,11 +576,17 @@ const Home: NextPage = () => {
 
                 <div className="absolute left-[3.8%] top-[69%] sm:w-[45%] md:w-[45%] lg:w-[45%] xl:w-[45%] bg-[url(/assets/banner2.png)] bg-no-repeat bg-contain z-20">
                     <div className="">
-                        {renderTabContent()}
+                        <div>
+                            {renderTabContent()}
+                        </div>
 
                         <div className="flex flex-row relative">
                             <ul className=''>
-                                <button onClick={handleAddTeamMember} className=" absolute left-[70%] h-[60px] bg-cover bg-no-repeat w-[120px] -mt-10 p-6 text-xs bottom-10 bg-[url(/assets/button.png)]">
+                                <button onClick={handleAddTech} className=" absolute left-[30%] h-[50px] w-[100px] bottom-10 bg-cover bg-no-repeat text-xs bg-[url(/assets/button.png)]">
+                                    <label className="relative -top-2"> Add Tech</label>
+                                </button>
+                                <br />
+                                <button onClick={handleAddTeamMember} className=" absolute left-[70%] h-[60px] bg-cover bg-no-repeat w-[120px] text-xs bottom-10 bg-[url(/assets/button.png)]">
                                     <label className="relative -top-0"> Add Member</label>
                                 </button>
                                 <br />
@@ -588,10 +594,6 @@ const Home: NextPage = () => {
                                 <button className="absolute left-[88%] bottom-6 h-[100px] w-[100px] bg-contain mt-5 bg-[url(/assets/submit.png)] bg-no-repeat" onClick={handleSubmit}>
                                     <label className="relative top-4">submit</label>
                                 </button>
-                                <button onClick={handleAddTech} className=" absolute left-[35%] h-[50px] bottom-10 bg-cover bg-no-repeat w-[100px] -mt-10 p-6 text-xs bg-[url(/assets/button.png)]">
-                                    <label className="relative -top-2"> Add Tech</label>
-                                </button>
-                                <br />
                             </ul>
                         </div>
                     </div>
