@@ -156,6 +156,8 @@ async function generateHackathonProposal(hackathonApp: HackathonEntry) {
     return { enhancedProposal: rawOutput, messages, response: parsedResponse, usedEmbeddingIds, evaluation };
 }
 
+
+export const maxDuration = 120; // This function can run for a maximum of 5 seconds
 // Example usage for POST handler or another part of your application
 export async function POST(request: Request) {
     try {

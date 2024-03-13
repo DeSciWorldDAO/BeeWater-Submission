@@ -58,6 +58,7 @@ const Home: NextPage = () => {
     const [evals, setEvals] = useState<AIEvaluation[]>();
     const [evalIndex, setEvalIndex] = useState<number>(0);
     const [entryIndex, setEntryIndex] = useState<number>(0);
+    const [isProject, setIsProject] = useState(true);
 
     // web3 config
     const signer = useSigner();
@@ -515,6 +516,10 @@ const Home: NextPage = () => {
             </div >
         )
     };
+    const HaikuFeed = () => {
+        return (
+            <div>haiku</div>)
+    }
 
     // Render form (simplified for demonstration)
     return (
@@ -553,12 +558,12 @@ const Home: NextPage = () => {
                             Project
                         </label>
                     </button>
-                    <button className='sm:h-[10px] md:h-[30px] lg:h-[40px] xl:h-[60px] sm:w-[20px] md:w-[60px] lg:w-[80px] xl:w-[120px] bg-[url(/assets/button.png)]' onClick={() => setActiveTab('update')}>
+                    <button className='sm:h-[10px] md:h-[30px] lg:h-[40px] xl:h-[60px] sm:w-[20px] md:w-[60px] lg:w-[80px] xl:w-[120px] bg-[url(/assets/button.png)]' onClick={() => setIsProject(!isProject)}>
                         <label className='relative -top-10 left-6'>
                             Toggle View
                         </label>
                         <label className='relative -left-10'>
-                            Project
+                            {isProject ? "Project" : "Haiku"}
                         </label>
                     </button>
                     <div className='sm:h-[10px] md:h-[30px] lg:h-[40px] xl:h-[60px] sm:w-[20px] md:w-[60px] lg:w-[80px] xl:w-[120px] bg-[url(/assets/button.png)]'>
@@ -582,7 +587,7 @@ const Home: NextPage = () => {
 
                 <div className='absolute left-[6%] top-[29%] w-[52%]'>
                     <span className="relative sm:text-md md:text-lg lg:text-xl xl:text-2xl sm:-top-9 md:-top-10 lg:-top-12 xl:-top-14 left-6 text-yellow-500"> <strong>Project: {entry.hack.projectName}</strong ></span>
-                    <EvaluationDetails entry={entry} evalIndex={evalIndex} />
+                    {isProject ? <EvaluationDetails entry={entry} evalIndex={evalIndex} /> : <HaikuFeed />}
                 </div>
 
                 <button
@@ -608,7 +613,7 @@ const Home: NextPage = () => {
                                 </button>
                                 <br />
                                 {/* Submit Button */}
-                                <button className="absolute sm:left-[85%] sm:bottom-[150%] md:left-[80%] md:bottom-[100%] lg:left-[75%] lg:bottom-[80%] xl:left-[75%] xl:bottom-[75%]  sm:h-[20px] md:h-[60px] lg:h-[80px] xl:h-[100px] xl:w-[100px] sm:w-[20px] md:w-[60px] lg:w-[80px] xl:w-[100px] bg-contain mt-5 bg-[url(/assets/submit.png)] bg-no-repeat" onClick={handleSubmit}>
+                                <button className="absolute sm:left-[85%] sm:bottom-[150%] md:left-[80%] md:bottom-[100%] lg:left-[75%] lg:bottom-[80%] xl:left-[75%] xl:bottom-[75%]  sm:h-[20px] md:h-[60px] lg:h-[80px] xl:h-[100px] sm:w-[20px] md:w-[60px] lg:w-[80px] xl:w-[100px] bg-contain mt-5 bg-[url(/assets/submit.png)] bg-no-repeat" onClick={handleSubmit}>
                                     <label className="relative top-4">submit</label>
                                 </button>
                             </ul>
