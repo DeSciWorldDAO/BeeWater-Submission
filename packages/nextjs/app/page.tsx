@@ -9,7 +9,7 @@ import { toast } from "react-hot-toast";
 import { useAccount } from 'wagmi';
 import { createHackathonEntry, hackathonEntry, updateHackathonEntry } from "~~/app/hackathon"; import { ChartContainer, BarChart } from "@mui/x-charts";
 import ChatSection from "./components/chat-section";
-import { HackathonEntry, HackathonProjectAttributes, AIEvaluation, TeamMember, ProgressUpdate, CodeEntry } from "~~/types/dbSchema";
+import { HackathonEntry, HackathonProjectAttributes, AIEvaluation, TeamMember, ProgressUpdate, CodeEntry, Haikipu } from "~~/types/dbSchema";
 import { useSigner } from "~~/utils/wagmi-utils";
 import { EAS, SchemaEncoder } from "@ethereum-attestation-service/eas-sdk";
 // Define types for your state
@@ -60,6 +60,7 @@ const Home: NextPage = () => {
     const [entryIndex, setEntryIndex] = useState<number>(0);
     const [isProject, setIsProject] = useState(true);
     const [isUpdate, setIsUpdate] = useState(false);
+    const [haikuDb, setHaikuDb] = useState<Haikipu[]>([]);
 
     // web3 config
     const signer = useSigner();
@@ -75,6 +76,13 @@ const Home: NextPage = () => {
         setEntryIndex(res.length - 1);
         setMyProject(res[res.length - 1]);
         setEvals(res[res.length - 1].eval);
+        console.log(res);
+    };
+
+    const haikuCall = async () => {
+        const data = await fetch(`api/haikuMongo?type="RnD"`)
+        const res: Haikipu[] = await data.json()
+        setHaikuDb(res);
         console.log(res);
     };
 
@@ -109,6 +117,7 @@ const Home: NextPage = () => {
     useEffect(() => {
         if (address == null) return
         dbCall()
+        haikuCall()
     }, [address])
 
     useEffect(() => {
@@ -519,7 +528,19 @@ const Home: NextPage = () => {
     };
     const HaikuFeed = () => {
         return (
-            <div>haiku</div>)
+            <div className="absolute -top-2 h-[300px] w-[700px]  overflow-x-hidden overflow-y-scroll"
+            >
+                {haikuDb.map((haiku: any, i: number) => (
+                    <div className="left-2 relative w-full h-2/3" key={i}>
+                        <div className="card p-6 border-2 backdrop-blur-lg">
+                            <span className="sm:text-lg md:text-xl lg:text-2xl xl:text-2xl"><strong>{haiku.haikipu?.title}</strong></span>
+                            <span className="sm:text-lg md:text-xl lg:text-2xl xl:text-2xl"><strong>{haiku.haikipu?.haiku}</strong></span>
+                            <span className="sm:text-lg md:text-xl lg:text-2xl xl:text-2xl"><strong>{haiku.address}</strong></span>
+                        </div>
+                    </div>
+                ))}
+
+            </div>)
     }
 
     // Render form (simplified for demonstration)
