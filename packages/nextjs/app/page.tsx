@@ -193,7 +193,7 @@ const Home: NextPage = () => {
         }
     };
 
-    const handleSubmitUpdate = async () => {
+    const handleUpdate = async () => {
         if (!address) return; // Guard against missing address
         toast.success("Submitting your update");
         try {
@@ -284,7 +284,7 @@ const Home: NextPage = () => {
     const renderSubmitTab = () => {
         return (
             <div
-                className={"flex flex-row sm:w-[250px] md:w-[300px] lg:w-[400px] xl:w-[500px] sm:h-[60px] md:h-[60px] lg:h-[70px] xl:h-[120px] items-start justify-around overflow-y-scroll overflow-x-scroll sm:mt-4 md:mt-6 lg:mt-8 xl:mt-10 sm:ml-5 md:ml-5"}
+                className={"p-3 flex flex-row sm:w-[300px] md:w-[400px] lg:w-[500px] xl:w-[700px] sm:h-[60px] md:h-[60px] lg:h-[70px] xl:h-[120px] items-start justify-around overflow-y-scroll overflow-x-hidden sm:mt-4 md:mt-6 lg:mt-8 xl:mt-10 sm:ml-5 md:ml-5"}
             >
                 <div className={"flex flex-col"}>
                     SUBMIT YOUR PROJECT<br />
@@ -360,9 +360,9 @@ const Home: NextPage = () => {
     const renderUpdateTab = () => {
         return (
             <div
-                className={"flex flex-row w-1/3 h-1/3 p-6"}
+                className={"p-3 flex flex-row sm:w-[300px] md:w-[400px] lg:w-[500px] xl:w-[700px] sm:h-[60px] md:h-[60px] lg:h-[70px] xl:h-[120px] items-start justify-around overflow-y-scroll overflow-x-hidden sm:mt-4 md:mt-6 lg:mt-8 xl:mt-10 sm:ml-5 md:ml-5"}
             >
-                <div className={"flex flex-col mt-5"}>
+                <div className={"flex flex-col"}>
                     PROGRESS UPDATE<br />
                     <input
                         name="progress"
@@ -401,7 +401,6 @@ const Home: NextPage = () => {
                         placeholder="Add Action Items"
                     />
 
-                    <button onClick={handleAddActionItems}>New Item</button><br />
 
                 </div>
                 {/* Tech Input */}
@@ -426,12 +425,8 @@ const Home: NextPage = () => {
                         className={"text-black"}
                         placeholder="Language"
                     />
-                    <button onClick={handleAddCode}>Add Code</button>
                     <br />
-                    {/* Submit Button */}
-                    <button className={"text-xl"} onClick={handleSubmitUpdate}>
-                        Submit
-                    </button>
+
                 </div>
             </div>
         );
@@ -439,8 +434,55 @@ const Home: NextPage = () => {
 
     const renderBrowseTab = () => {
         return (
-            <div className="absolute">
+            <div
+                className={"p-3 flex flex-row sm:w-[300px] md:w-[400px] lg:w-[500px] xl:w-[700px] sm:h-[60px] md:h-[60px] lg:h-[70px] xl:h-[120px] items-start justify-around overflow-y-scroll overflow-x-hidden sm:mt-4 md:mt-6 lg:mt-8 xl:mt-10 sm:ml-5 md:ml-5"}
+            >
+                <div className={"flex flex-col"}>
+                    HAIKU FINDER<br />
+                    <input
+                        name="progress"
+                        onChange={handleProgressUpdate}
+                        placeholder="Haiku Title"
+                        className={"text-black"}
+                        value={updateData.progress}
+                    />
+                    <input
+                        name="wins"
+                        onChange={handleProgressUpdate}
+                        placeholder="Author"
+                        className={"text-black"}
+                        value={updateData.wins}
+                    />
+                    <input
+                        name="losses"
+                        onChange={handleProgressUpdate}
+                        placeholder="ID"
+                        className={"text-black"}
+                        value={updateData.losses}
+                    />
+                    <input
+                        name="gamePlan"
+                        onChange={handleProgressUpdate}
+                        placeholder="Category"
+                        className={"text-black"}
+                        value={updateData.gamePlan}
+                    />
 
+
+
+                </div>
+                {/* Tech Input */}
+
+                <div className={"flex flex-col"}>
+                    Haiku Chain<br />
+                    <textarea
+                        value={codeInput}
+                        onChange={e => setCodeInput(e.target.value)}
+                        className={"text-black"}
+                        placeholder="Add Code"
+                    />
+
+                </div>
             </div>
         );
     };
@@ -531,11 +573,14 @@ const Home: NextPage = () => {
             <div className="absolute -top-2 h-[300px] w-[700px]  overflow-x-hidden overflow-y-scroll"
             >
                 {haikuDb.map((haiku: any, i: number) => (
-                    <div className="left-2 relative w-full h-2/3" key={i}>
+                    <div className="left-2 relative w-full h-3/4" key={i}>
                         <div className="card p-6 border-2 backdrop-blur-lg">
-                            <span className="sm:text-lg md:text-xl lg:text-2xl xl:text-2xl"><strong>{haiku.haikipu?.title}</strong></span>
-                            <span className="sm:text-lg md:text-xl lg:text-2xl xl:text-2xl"><strong>{haiku.haikipu?.haiku}</strong></span>
-                            <span className="sm:text-lg md:text-xl lg:text-2xl xl:text-2xl"><strong>{haiku.address}</strong></span>
+                            <span className="sm:text-lg md:text-xl lg:text-2xl xl:text-2xl">Title:{" "}<strong>{haiku.haikipu?.title}</strong></span>
+                            <span className="sm:text-lg md:text-xl lg:text-2xl xl:text-2xl">Haiku:{" "}<strong>{haiku.haikipu?.haiku}</strong></span>
+
+                            <span className="sm:text-lg md:text-xl lg:text-2xl xl:text-2xl">ID:{" "}<strong>{haiku._id}</strong></span>
+
+                            <span className="sm:text-lg md:text-xl lg:text-2xl xl:text-2xl">Creator:{" "}<strong>{haiku.address}</strong></span>
                         </div>
                     </div>
                 ))}
@@ -570,7 +615,7 @@ const Home: NextPage = () => {
                             {isUpdate ? "Update" : "Submit"}
                         </label>
                     </button>
-                    <button className='sm:h-[10px] md:h-[30px] lg:h-[40px] xl:h-[60px] sm:w-[20px] md:w-[60px] lg:w-[80px] xl:w-[120px] bg-[url(/assets/button.png)]' onClick={() => setIsProject(!isProject)}>
+                    <button className='sm:h-[10px] md:h-[30px] lg:h-[40px] xl:h-[60px] sm:w-[20px] md:w-[60px] lg:w-[80px] xl:w-[120px] bg-[url(/assets/button.png)]' onClick={() => { setIsProject(!isProject); setActiveTab(`${!isProject ? 'update' : 'browse'}`) }}>
                         <label className='relative -top-10 left-6'>
                             Toggle View
                         </label>
@@ -625,7 +670,7 @@ const Home: NextPage = () => {
                                 </button>
                                 <br />
                                 {/* Submit Button */}
-                                <button className="absolute sm:left-[85%] sm:bottom-[150%] md:left-[80%] md:bottom-[100%] lg:left-[75%] lg:bottom-[80%] xl:left-[75%] xl:bottom-[75%]  sm:h-[20px] md:h-[60px] lg:h-[80px] xl:h-[100px] sm:w-[20px] md:w-[60px] lg:w-[80px] xl:w-[100px] bg-contain mt-5 bg-[url(/assets/submit.png)] bg-no-repeat" onClick={handleSubmit}>
+                                <button className="absolute sm:left-[85%] sm:bottom-[150%] md:left-[80%] md:bottom-[100%] lg:left-[75%] lg:bottom-[80%] xl:left-[75%] xl:bottom-[75%]  sm:h-[20px] md:h-[60px] lg:h-[80px] xl:h-[100px] sm:w-[20px] md:w-[60px] lg:w-[80px] xl:w-[100px] bg-contain mt-5 bg-[url(/assets/submit.png)] bg-no-repeat" onClick={() => isUpdate ? handleUpdate() : handleSubmit()}>
                                     <label className="relative top-4">submit</label>
                                 </button>
                             </ul>
