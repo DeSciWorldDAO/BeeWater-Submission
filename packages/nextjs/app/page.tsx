@@ -273,9 +273,9 @@ const Home: NextPage = () => {
     const renderSubmitTab = () => {
         return (
             <div
-                className={"flex flex-row w-full items-start justify-around"}
+                className={"flex flex-row sm:w-[250px] md:w-[300px] lg:w-[400px] xl:w-[500px] sm:h-[60px] md:h-[60px] lg:h-[70px] xl:h-[120px] items-start justify-around overflow-y-scroll overflow-x-scroll sm:mt-4 md:mt-6 lg:mt-8 xl:mt-10 sm:ml-5 md:ml-5"}
             >
-                <div className={"flex flex-col mt-10"}>
+                <div className={"flex flex-col"}>
                     SUBMIT YOUR PROJECT<br />
                     <input
                         name="projectName"
@@ -318,7 +318,7 @@ const Home: NextPage = () => {
                 </div>
                 {/* Tech Input */}
 
-                <div className={"flex flex-col mt-10"}>
+                <div className={"flex flex-col"}>
                     ADD TEAM MEMBERS<br />
                     <input
                         value={teamInput}
@@ -349,7 +349,7 @@ const Home: NextPage = () => {
     const renderUpdateTab = () => {
         return (
             <div
-                className={"flex flex-row w-1/2 h-1/3 p-6"}
+                className={"flex flex-row w-1/3 h-1/3 p-6"}
             >
                 <div className={"flex flex-col mt-5"}>
                     PROGRESS UPDATE<br />
@@ -436,11 +436,10 @@ const Home: NextPage = () => {
     // Then use this in your return statement to dynamically show the content
 
     const ProjectDetails = ({ entry, evalIndex }: { entry: any, evalIndex: number }) =>
-
     (
-        <div className=" p-6">
+        <div className="">
             <ul>
-                <span className='text-2xl'>
+                <span className='sm:text-lg md:text-xl lg:text-2xl xl:text-2xl'>
                     <strong>
                         Project Details:<br /><br />
                         {entry?.hack?.projectName}</strong>
@@ -475,15 +474,16 @@ const Home: NextPage = () => {
         return (
 
             <div className="flex flex-row items-start justify-between relative">
-                <div className="absolute w-[35%] bg-white border-4  min-h-[300px] h-full overflow-y-scroll overflow-x-hidden">
+                <div className="absolute w-[35%] bg-white bg-opacity-50 border-4 sm:max-h-[50px] md:max-h-[100px] lg:max-h-[160px] xl:max-h-[250px] overflow-y-scroll overflow-x-hidden">
                     <ProjectDetails entry={entry} evalIndex={evalIndex} />
                 </div>
-                <div className="absolute left-[40%] w-[35%] p-6 min-h-[300px] h-full overflow-auto">
+
+                <div className="absolute left-[40%] w-[35%] bg-white bg-opacity-50 border-4 sm:max-h-[50px] md:max-h-[100px] lg:max-h-[160px] xl:max-h-[250px] overflow-y-scroll overflow-x-hidden">
                     <div
-                            className={"relative border-4 p-4 bg-white -backdrop-hue-rotate-180"}
+                            className={"relative"}
                         >
                     <ul>
-                        <span className="text-2xl"> <strong>Evaluation Details:</strong ></span>
+                        <span className=" sm:text-lg md:text-xl lg:text-2xl xl:text-2xl"> <strong>Evaluation Details:<br /><br /></strong ></span>
                         
                             <li>Evaluation Comments: {entry?.eval[evalIndex]?.evaluationRemarks}</li>
                             <li>Code Snippets: {entry?.eval[evalIndex]?.codeSnippets?.map((snippet: CodeEntry, i: number) => (<>
@@ -533,70 +533,75 @@ const Home: NextPage = () => {
                     <Header />
                 </div>
 
-                <div className='flex absolute left-[25%] top-[12%] gap-10 text-sm'>
-                    <button className='h-[60px] w-[120px] bg-[url(/assets/button.png)]' onClick={() => setActiveTab('submit')}>
+                <div className='flex absolute sm:left-[25%] md:left-[20%] lg:left-[20%] xl:left-[20%] sm:top-[12%] md:top-[12%] lg:top-[13%] xl:top-[14.5%] sm:gap-10 md:gap-8 lg:gap-6 xl:gap-4 text-sm'>
+                    <button className='sm:h-[10px] md:h-[30px] lg:h-[40px] xl:h-[60px] sm:w-[20px] md:w-[60px] lg:w-[80px] xl:w-[120px] bg-[url(/assets/button.png)]' onClick={() => setActiveTab('submit')}>
                         <label className=''>
                             Submit
                         </label>
                     </button>
-                    <button className='h-[60px] w-[120px] bg-[url(/assets/button.png)]' onClick={() => setActiveTab('submit')}>
+                    <button className='sm:h-[10px] md:h-[30px] lg:h-[40px] xl:h-[60px] sm:w-[20px] md:w-[60px] lg:w-[80px] xl:w-[120px] bg-[url(/assets/button.png)]' onClick={() => setActiveTab('submit')}>
                         <label className=''>
                             <Faucet />
                         </label>
                     </button>
 
-                    <button className='h-[60px] w-[120px] bg-[url(/assets/button.png)]' onClick={() => setActiveTab('update')}>
+                    <button className='sm:h-[10px] md:h-[30px] lg:h-[40px] xl:h-[60px] sm:w-[20px] md:w-[60px] lg:w-[80px] xl:w-[120px] bg-[url(/assets/button.png)]' onClick={() => setActiveTab('update')}>
                         <label className=''>
                             Update
                         </label>
                     </button>
                 </div>
 
-                <div className='absolute left-[18%] top-[66%] w-[33%]'>
-                    <ul className=''>
-                        <button className=" w-[120px] h-[50px] bg-no-repeat bg-[url(/assets/btn.png)]" onClick={() => evalHandler()}>
-                        </button>
-                        <span className="relative">Next||Prev</span>
-                        <button className="bottom-20 w-[120px] h-[50px] bg-no-repeat bg-[url(/assets/btn.png)]" onClick={() => evalHandler()}>
+                <div className='absolute sm:left-[16.5%] md:left-[16.5%] lg:left-[18%] xl:left-[20%] top-[64%] w-[33%]'>
+                    <ul className=''>                      
+                        <button className="font-bold sm:w-[70px] md:w-[80px] lg:w-[95px] xl:w-[95px] sm:h-[35px] md:h-[40px] lg:h-[47.5px] xl:h-[47.5px] bg-no-repeat bg-[url(/assets/btn.png)] bg-contain" onClick={() => evalHandler()}>
+                        NEXT
+                        </button>                     
+                        <button className="font-bold sm:w-[70px] md:w-[80px] lg:w-[95px] xl:w-[95px] sm:h-[35px] md:h-[40px] lg:h-[47.5px] xl:h-[47.5px] bg-no-repeat bg-[url(/assets/btn.png)] bg-contain" onClick={() => evalHandler()}>
+                        PREV
                         </button>
                     </ul>
                 </div>
 
                 <div className='absolute left-[6%] top-[29%] w-[52%]'>
-                    <span className="relative text-2xl -top-14 left-6 text-yellow-500"> <strong>Project: {entry.hack.projectName}</strong ></span>
+                    <span className="relative sm:text-md md:text-lg lg:text-xl xl:text-2xl sm:-top-9 md:-top-10 lg:-top-12 xl:-top-14 left-6 text-yellow-500"> <strong>Project: {entry.hack.projectName}</strong ></span>
                     <EvaluationDetails entry={entry} evalIndex={evalIndex} />
                 </div>
 
                 <button
-                    className="absolute left-[45%] bottom-[30%]  w-[120px] h-[120px] bg-[url(/assets/nextProject.png)] bg-contain bg-no-repeat z-45"
+                    className="absolute left-[45%] bottom-[30%] sm:h-[60px] md:h-[80px] lg:h-[100px] xl:h-[120px] sm:w-[60px] md:w-[80px] lg:w-[100px] xl:w-[120px] bg-[url(/assets/nextProject.png)] bg-contain bg-no-repeat"
                     onClick={() => indexHandler()}>
                     <label className="relative left-[0%] top-[50%] text-sm text-white">Next Entry</label>
                 </button>
 
-                <div className="absolute left-[1.5%] top-[69%] w-[47%] bg-[url(/assets/banner2.png)]  bg-no-repeat bg-cover z-20">
+                <div className="absolute left-[3.8%] top-[69%] sm:w-[45%] md:w-[45%] lg:w-[45%] xl:w-[45%] bg-[url(/assets/banner2.png)] bg-no-repeat bg-contain z-20">
                     <div className="">
-                        {renderTabContent()}
+                        <div>
+                            {renderTabContent()}
+                        </div>
 
                         <div className="flex flex-row relative">
                             <ul className=''>
-                                <button onClick={handleAddTeamMember} className=" absolute left-[70%] h-[60px] bg-cover bg-no-repeat w-[120px] -mt-10 p-6 text-xs bottom-10 bg-[url(/assets/button.png)]">
+                                <button onClick={handleAddTech} className=" absolute left-[10%] top-[30%] sm:h-[10px] md:h-[30px] lg:h-[40px] xl:h-[60px] sm:w-[20px] md:w-[60px] lg:w-[80px] xl:w-[120px] bg-cover bg-no-repeat text-sm bg-[url(/assets/button.png)]">
+                                    <label className="relative -top-2"> Add Tech</label>
+                                </button>
+                                <br />
+                                <button onClick={handleAddTeamMember} className=" absolute left-[36%] top-[30%]  sm:h-[10px] md:h-[30px] lg:h-[40px] xl:h-[60px] sm:w-[20px] md:w-[60px] lg:w-[80px] xl:w-[120px] bg-cover bg-no-repeat  text-sm bg-[url(/assets/button.png)]">
                                     <label className="relative -top-0"> Add Member</label>
                                 </button>
                                 <br />
                                 {/* Submit Button */}
-                                <button className="absolute left-[88%] bottom-6 h-[100px] w-[100px] bg-contain mt-5 bg-[url(/assets/submit.png)] bg-no-repeat" onClick={handleSubmit}>
+                                <button className="absolute sm:left-[85%] sm:bottom-[150%] md:left-[80%] md:bottom-[100%] lg:left-[75%] lg:bottom-[80%] xl:left-[75%] xl:bottom-[75%]  sm:h-[20px] md:h-[60px] lg:h-[80px] xl:h-[100px] xl:w-[100px] sm:w-[20px] md:w-[60px] lg:w-[80px] xl:w-[100px] bg-contain mt-5 bg-[url(/assets/submit.png)] bg-no-repeat" onClick={handleSubmit}>
                                     <label className="relative top-4">submit</label>
                                 </button>
-                                <button onClick={handleAddTech} className=" absolute left-[35%] h-[50px] bottom-10 bg-cover bg-no-repeat w-[100px] -mt-10 p-6 text-xs bg-[url(/assets/button.png)]">
-                                    <label className="relative -top-2"> Add Tech</label>
-                                </button>
-                                <br />
                             </ul>
                         </div>
                     </div>
                 </div>
-                <div className="absolute right-[7%] top-[12.5%] w-[33%]">
-                    <div className="bg-[url(/assets/desciLogo.png)] bg-contain h-[140px] w-[140px] bg-no-repeat"></div>
+                <div className="absolute right-[9.7%] top-[11%] w-[33%]">
+                    <div className="bg-[url(/assets/desciLogo.png)] bg-contain sm:h-[60px] md:h-[80px] lg:h-[100px] xl:h-[120px] sm:w-[60px] md:w-[80px] lg:w-[100px] xl:w-[120px] bg-no-repeat"></div>
+                </div>
+                <div className="absolute right-[7%] top-[30%] w-[33%]">
                     <ChatSection />
                 </div>
             </div>

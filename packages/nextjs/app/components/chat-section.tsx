@@ -35,7 +35,7 @@ export default function ChatSection() {
                     stop={stop}
                 />
             
-            <div className="absolute w-full bottom-[-15%] sm:bottom-[-30%] md:bottom-[-30%] lg:bottom-[-25%] xl:bottom-[-20%]">
+            <div className="absolute w-full sm:bottom-[-60%] md:bottom-[-45%] lg:bottom-[-35%] xl:bottom-[-25%]">
                     <ChatInput
                         input={input}
                         handleSubmit={handleSubmit}
