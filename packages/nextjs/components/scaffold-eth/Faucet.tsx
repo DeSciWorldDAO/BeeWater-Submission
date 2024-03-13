@@ -62,7 +62,7 @@ export const Faucet = () => {
     return (
         <div>
             <label htmlFor="faucet-modal" >
-                <span>QuestLog</span>
+                <span className="relative top-4 left-6 cursor-pointer">QuestLog</span>
             </label>
             <input type="checkbox" id="faucet-modal" className="modal-toggle" />
             <label htmlFor="faucet-modal" className="modal cursor-pointer">

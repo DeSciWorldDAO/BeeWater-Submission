@@ -480,11 +480,11 @@ const Home: NextPage = () => {
 
                 <div className="absolute left-[40%] w-[35%] bg-white bg-opacity-50 border-4 sm:max-h-[50px] md:max-h-[100px] lg:max-h-[160px] xl:max-h-[250px] overflow-y-scroll overflow-x-hidden">
                     <div
-                            className={"relative"}
-                        >
-                    <ul>
-                        <span className=" sm:text-lg md:text-xl lg:text-2xl xl:text-2xl"> <strong>Evaluation Details:<br /><br /></strong ></span>
-                        
+                        className={"relative"}
+                    >
+                        <ul>
+                            <span className=" sm:text-lg md:text-xl lg:text-2xl xl:text-2xl"> <strong>Evaluation Details:<br /><br /></strong ></span>
+
                             <li>Evaluation Comments: {entry?.eval[evalIndex]?.evaluationRemarks}</li>
                             <li>Code Snippets: {entry?.eval[evalIndex]?.codeSnippets?.map((snippet: CodeEntry, i: number) => (<>
                                 <li key={i}><strong>{snippet.code}</strong></li>
@@ -494,8 +494,8 @@ const Home: NextPage = () => {
                             <li>Innovation Score: {entry?.eval[evalIndex]?.innovationScore}</li>
                             <li>Feasibility: {entry?.eval[evalIndex]?.feasibilityScore}</li>
                             <li>Coherence Score: {entry?.eval[evalIndex]?.coherenceScore}</li>
-                        
-                    </ul>
+
+                        </ul>
                     </div>
                     {/* <div className="relative">
                         <BarChart
@@ -539,11 +539,9 @@ const Home: NextPage = () => {
                             Submit
                         </label>
                     </button>
-                    <button className='sm:h-[10px] md:h-[30px] lg:h-[40px] xl:h-[60px] sm:w-[20px] md:w-[60px] lg:w-[80px] xl:w-[120px] bg-[url(/assets/button.png)]' onClick={() => setActiveTab('submit')}>
-                        <label className=''>
-                            <Faucet />
-                        </label>
-                    </button>
+                    <div className='sm:h-[10px] md:h-[30px] lg:h-[40px] xl:h-[60px] sm:w-[20px] md:w-[60px] lg:w-[80px] xl:w-[120px] bg-[url(/assets/button.png)]'>
+                        <Faucet />
+                    </div>
 
                     <button className='sm:h-[10px] md:h-[30px] lg:h-[40px] xl:h-[60px] sm:w-[20px] md:w-[60px] lg:w-[80px] xl:w-[120px] bg-[url(/assets/button.png)]' onClick={() => setActiveTab('update')}>
                         <label className=''>
@@ -553,12 +551,12 @@ const Home: NextPage = () => {
                 </div>
 
                 <div className='absolute sm:left-[16.5%] md:left-[16.5%] lg:left-[18%] xl:left-[20%] top-[64%] w-[33%]'>
-                    <ul className=''>                      
+                    <ul className=''>
                         <button className="font-bold sm:w-[70px] md:w-[80px] lg:w-[95px] xl:w-[95px] sm:h-[35px] md:h-[40px] lg:h-[47.5px] xl:h-[47.5px] bg-no-repeat bg-[url(/assets/btn.png)] bg-contain" onClick={() => evalHandler()}>
-                        NEXT
-                        </button>                     
+                            NEXT
+                        </button>
                         <button className="font-bold sm:w-[70px] md:w-[80px] lg:w-[95px] xl:w-[95px] sm:h-[35px] md:h-[40px] lg:h-[47.5px] xl:h-[47.5px] bg-no-repeat bg-[url(/assets/btn.png)] bg-contain" onClick={() => evalHandler()}>
-                        PREV
+                            PREV
                         </button>
                     </ul>
                 </div>

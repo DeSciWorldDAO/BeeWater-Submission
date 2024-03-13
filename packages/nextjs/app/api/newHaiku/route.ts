@@ -162,12 +162,12 @@ export async function POST(request: Request) {
         // Proceed with storing the enhanced proposal in MongoDB or returning it in the response
         //
         const db = client.db("nerdWorkState"); // Connect to the database
-        const hackCodex = db.collection("nerdWork"); //
+        const haikuCodex = db.collection("nerdHaikus"); //
         // assumed input
         // run this function asynchronously, do not block for it to finish
         runLlamaAndStore(db, usedEmbeddingIds, messages, haikipu);
 
-        await hackCodex.updateOne(
+        await haikuCodex.updateOne(
             {
                 id: haikipu._id,
                 address: haikipu.address,
