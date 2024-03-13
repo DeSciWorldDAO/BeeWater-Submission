@@ -71,7 +71,6 @@ async function runLlamaAndStore(
         promptMessages,
         embeddingId,
         usedEmbeddingIds,
-        promptResponse,
     );
     const usageResult = await storeUsageByEmbeddingId(db, projectId, embeddingId, usedEmbeddingIds);
     return {

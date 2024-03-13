@@ -518,36 +518,55 @@ const Home: NextPage = () => {
 
     // Render form (simplified for demonstration)
     return (
-        <div className="font-win relative h-screen w-full bg-black overflow-hidden p-2">
+        <div className="font-win relative h-screen w-full bg-black overflow-hidden">
             {/* Background image */}
-            <Image
-                src="/assets/background.png"
-                alt="Background"
-                layout="fill"             // Esto hace que la imagen llene el contenedor
-                // objectFit="contain"      
-                objectPosition="center"   // Centra la imagen en el contenedor
-            />
             {/* Content on top of the backgriund image*/}
-            <div className="flex justify-center items-center h-full w-full absolute z-10">
+            <div className="flex  justify-center sm:left-[5%] md:left-[4%] lg:left-[4%] xl:left-[4%] sm:top-[6%] md:top-[6%] lg:top-[7%] xl:top-[8%] items-center h-[90%] w-[90%] absolute z-10">
+                <Image
+                    src="/assets/background.png"
+                    alt="Background"
+                    layout="fill"             // Esto hace que la imagen llene el contenedor
+                    // objectFit="contain"      
+                    objectPosition="center"   // Centra la imagen en el contenedor
+                />
+
                 <div className="absolute left-[3%] top-[4%] w-[33%]">
                     <Header />
                 </div>
 
                 <div className='flex absolute sm:left-[25%] md:left-[20%] lg:left-[20%] xl:left-[20%] sm:top-[12%] md:top-[12%] lg:top-[13%] xl:top-[14.5%] sm:gap-10 md:gap-8 lg:gap-6 xl:gap-4 text-sm'>
                     <button className='sm:h-[10px] md:h-[30px] lg:h-[40px] xl:h-[60px] sm:w-[20px] md:w-[60px] lg:w-[80px] xl:w-[120px] bg-[url(/assets/button.png)]' onClick={() => setActiveTab('submit')}>
-                        <label className=''>
+                        <label className='relative -top-10 left-8'>
+                            New Project
+                        </label>
+                        <label className='relative -left-10'>
                             Submit
                         </label>
                     </button>
-                    <div className='sm:h-[10px] md:h-[30px] lg:h-[40px] xl:h-[60px] sm:w-[20px] md:w-[60px] lg:w-[80px] xl:w-[120px] bg-[url(/assets/button.png)]'>
-                        <Faucet />
-                    </div>
+
 
                     <button className='sm:h-[10px] md:h-[30px] lg:h-[40px] xl:h-[60px] sm:w-[20px] md:w-[60px] lg:w-[80px] xl:w-[120px] bg-[url(/assets/button.png)]' onClick={() => setActiveTab('update')}>
-                        <label className=''>
+                        <label className='relative -top-10 left-6'>
                             Update
                         </label>
+                        <label className='relative -left-6'>
+                            Project
+                        </label>
                     </button>
+                    <button className='sm:h-[10px] md:h-[30px] lg:h-[40px] xl:h-[60px] sm:w-[20px] md:w-[60px] lg:w-[80px] xl:w-[120px] bg-[url(/assets/button.png)]' onClick={() => setActiveTab('update')}>
+                        <label className='relative -top-10 left-6'>
+                            Toggle View
+                        </label>
+                        <label className='relative -left-10'>
+                            Project
+                        </label>
+                    </button>
+                    <div className='sm:h-[10px] md:h-[30px] lg:h-[40px] xl:h-[60px] sm:w-[20px] md:w-[60px] lg:w-[80px] xl:w-[120px] bg-[url(/assets/button.png)]'>
+                        <label className='relative -top-5 left-6'>
+                            New Haikipu
+                        </label>
+                        <Faucet />
+                    </div>
                 </div>
 
                 <div className='absolute sm:left-[16.5%] md:left-[16.5%] lg:left-[18%] xl:left-[20%] top-[64%] w-[33%]'>
