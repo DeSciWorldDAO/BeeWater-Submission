@@ -59,6 +59,7 @@ const Home: NextPage = () => {
     const [evalIndex, setEvalIndex] = useState<number>(0);
     const [entryIndex, setEntryIndex] = useState<number>(0);
     const [isProject, setIsProject] = useState(true);
+    const [isUpdate, setIsUpdate] = useState(false);
 
     // web3 config
     const signer = useSigner();
@@ -539,23 +540,13 @@ const Home: NextPage = () => {
                     <Header />
                 </div>
 
-                <div className='flex absolute sm:left-[25%] md:left-[20%] lg:left-[20%] xl:left-[20%] sm:top-[12%] md:top-[12%] lg:top-[13%] xl:top-[14.5%] sm:gap-10 md:gap-8 lg:gap-6 xl:gap-4 text-sm'>
-                    <button className='sm:h-[10px] md:h-[30px] lg:h-[40px] xl:h-[60px] sm:w-[20px] md:w-[60px] lg:w-[80px] xl:w-[120px] bg-[url(/assets/button.png)]' onClick={() => setActiveTab('submit')}>
+                <div className='flex absolute sm:left-[15%] md:left-[20%] lg:left-[25%] xl:left-[25%] sm:top-[12%] md:top-[12%] lg:top-[13%] xl:top-[14.5%] sm:gap-10 md:gap-8 lg:gap-6 xl:gap-4 text-sm'>
+                    <button className='sm:h-[10px] md:h-[30px] lg:h-[40px] xl:h-[60px] sm:w-[20px] md:w-[60px] lg:w-[80px] xl:w-[120px] bg-[url(/assets/button.png)]' onClick={() => { setActiveTab(`${!isUpdate ? 'update' : 'submit'}`); setIsUpdate(!isUpdate) }} >
                         <label className='relative -top-10 left-8'>
-                            New Project
+                            ToggleType
                         </label>
                         <label className='relative -left-10'>
-                            Submit
-                        </label>
-                    </button>
-
-
-                    <button className='sm:h-[10px] md:h-[30px] lg:h-[40px] xl:h-[60px] sm:w-[20px] md:w-[60px] lg:w-[80px] xl:w-[120px] bg-[url(/assets/button.png)]' onClick={() => setActiveTab('update')}>
-                        <label className='relative -top-10 left-6'>
-                            Update
-                        </label>
-                        <label className='relative -left-6'>
-                            Project
+                            {isUpdate ? "Update" : "Submit"}
                         </label>
                     </button>
                     <button className='sm:h-[10px] md:h-[30px] lg:h-[40px] xl:h-[60px] sm:w-[20px] md:w-[60px] lg:w-[80px] xl:w-[120px] bg-[url(/assets/button.png)]' onClick={() => setIsProject(!isProject)}>
@@ -574,7 +565,7 @@ const Home: NextPage = () => {
                     </div>
                 </div>
 
-                <div className='absolute sm:left-[16.5%] md:left-[16.5%] lg:left-[18%] xl:left-[20%] top-[64%] w-[33%]'>
+                <div className='absolute sm:left-[16.5%] md:left-[16.5%] lg:left-[18%] xl:left-[20%] top-[67%] w-[33%]'>
                     <ul className=''>
                         <button className="font-bold sm:w-[70px] md:w-[80px] lg:w-[95px] xl:w-[95px] sm:h-[35px] md:h-[40px] lg:h-[47.5px] xl:h-[47.5px] bg-no-repeat bg-[url(/assets/btn.png)] bg-contain" onClick={() => evalHandler()}>
                             NEXT
@@ -585,7 +576,7 @@ const Home: NextPage = () => {
                     </ul>
                 </div>
 
-                <div className='absolute left-[6%] top-[29%] w-[52%]'>
+                <div className='absolute left-[6%] top-[30%] w-[52%]'>
                     <span className="relative sm:text-md md:text-lg lg:text-xl xl:text-2xl sm:-top-9 md:-top-10 lg:-top-12 xl:-top-14 left-6 text-yellow-500"> <strong>Project: {entry.hack.projectName}</strong ></span>
                     {isProject ? <EvaluationDetails entry={entry} evalIndex={evalIndex} /> : <HaikuFeed />}
                 </div>
