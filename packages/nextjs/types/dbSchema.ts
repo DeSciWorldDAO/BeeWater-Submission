@@ -29,6 +29,10 @@ export type Node = {
     color: string;
 }
 
+export type HaikuNode = Node & {
+    haikipu: Haikipu;
+}
+
 export type TextNode = Node & {
     text: string;
 }

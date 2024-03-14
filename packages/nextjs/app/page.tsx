@@ -9,7 +9,7 @@ import { toast } from "react-hot-toast";
 import { useAccount } from 'wagmi';
 import { createHackathonEntry, hackathonEntry, updateHackathonEntry } from "~~/app/hackathon"; import { ChartContainer, BarChart } from "@mui/x-charts";
 import ChatSection from "./components/chat-section";
-import { Node, HackathonEntry, HackathonProjectAttributes, AIEvaluation, TeamMember, ProgressUpdate, CodeEntry, Haikipu, TextNode } from "~~/types/dbSchema";
+import { Node, HackathonEntry, HackathonProjectAttributes, AIEvaluation, TeamMember, ProgressUpdate, CodeEntry, Haikipu, TextNode, HaikuNode, Edge } from "~~/types/dbSchema";
 import { useSigner } from "~~/utils/wagmi-utils";
 import { EAS, SchemaEncoder } from "@ethereum-attestation-service/eas-sdk";
 // Define types for your state
@@ -271,10 +271,17 @@ const Home: NextPage = () => {
         setTechInput(""); // Reset input
     };
 
+    const haiku = haikuDb[0]
+
     const handleAddNode = () => {
         if (!canvas) return;
-        const newNode: TextNode = { id: canvas.node.length.toString(), type: "text", x: 100, y: 100, height: 1, width: 1, color: "1", text: "New Node" };
+        const newNode: HaikuNode = { id: haiku._id, type: "haiku", x: 100, y: 100, height: 1, width: 1, color: "1", haikipu: haiku };
         setCanvas({ ...canvas, node: [...canvas.node, newNode] });
+    }
+    const handleAddEdge = (from: string, to: string) => {
+        if (!canvas) return;
+        const newEdge: Edge = { id: `${from}-${to}`, fromNode: from, toNode: to, color: "1" };
+        setCanvas({ ...canvas, edge: [...canvas.edge, newEdge] });
     }
 
     // ProjectDetails.js
