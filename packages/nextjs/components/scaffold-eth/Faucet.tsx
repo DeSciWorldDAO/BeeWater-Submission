@@ -10,6 +10,7 @@ import { useTransactor } from "~~/hooks/scaffold-eth";
 import { getParsedError, notification } from "~~/utils/scaffold-eth";
 import DailyLog from "../dailyLog";
 import HaikuInput from "~~/components/HaikuInput";
+import MindWindow from "../MindWindow";
 
 // Account index to use from generated hardhat accounts.
 const FAUCET_ACCOUNT_INDEX = 0;
@@ -73,9 +74,6 @@ export const Faucet = () => {
                         ✕
                     </label>
                     <HaikuInput />
-
-
-
                 </label>
             </label>
         </div>

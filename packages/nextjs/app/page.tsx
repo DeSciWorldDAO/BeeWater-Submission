@@ -9,13 +9,15 @@ import { toast } from "react-hot-toast";
 import { useAccount } from 'wagmi';
 import { createHackathonEntry, hackathonEntry, updateHackathonEntry } from "~~/app/hackathon"; import { ChartContainer, BarChart } from "@mui/x-charts";
 import ChatSection from "./components/chat-section";
-import { HackathonEntry, HackathonProjectAttributes, AIEvaluation, TeamMember, ProgressUpdate, CodeEntry, Haikipu } from "~~/types/dbSchema";
+import { Node, HackathonEntry, HackathonProjectAttributes, AIEvaluation, TeamMember, ProgressUpdate, CodeEntry, Haikipu, TextNode } from "~~/types/dbSchema";
 import { useSigner } from "~~/utils/wagmi-utils";
 import { EAS, SchemaEncoder } from "@ethereum-attestation-service/eas-sdk";
 // Define types for your state
 import { Header } from "~~/components/Header";
 import DailyLog from "~~/components/dailyLog";
 import { Faucet } from "~~/components/scaffold-eth/Faucet";
+import MindWindow from "~~/components/MindWindow";
+import { useGlobalState } from "~~/services/store/store";
 
 const Home: NextPage = () => {
     const { address } = useAccount();
@@ -61,8 +63,11 @@ const Home: NextPage = () => {
     const [isProject, setIsProject] = useState(true);
     const [isUpdate, setIsUpdate] = useState(false);
     const [haikuDb, setHaikuDb] = useState<Haikipu[]>([]);
+    const state = useGlobalState();
 
     // web3 config
+    const canvas = state.myCanvas
+    const setCanvas = state.setMyCanvas
     const signer = useSigner();
     const account = useAccount();
     const usrAddress = account?.address;
@@ -266,6 +271,12 @@ const Home: NextPage = () => {
         setTechInput(""); // Reset input
     };
 
+    const handleAddNode = () => {
+        if (!canvas) return;
+        const newNode: TextNode = { id: canvas.node.length.toString(), type: "text", x: 100, y: 100, height: 1, width: 1, color: "1", text: "New Node" };
+        setCanvas({ ...canvas, node: [...canvas.node, newNode] });
+    }
+
     // ProjectDetails.js
     //
     const renderTabContent = () => {
@@ -434,56 +445,59 @@ const Home: NextPage = () => {
 
     const renderBrowseTab = () => {
         return (
-            <div
-                className={"p-3 flex flex-row sm:w-[300px] md:w-[400px] lg:w-[500px] xl:w-[700px] sm:h-[60px] md:h-[60px] lg:h-[70px] xl:h-[120px] items-start justify-around overflow-y-scroll overflow-x-hidden sm:mt-4 md:mt-6 lg:mt-8 xl:mt-10 sm:ml-5 md:ml-5"}
-            >
-                <div className={"flex flex-col"}>
-                    HAIKU FINDER<br />
-                    <input
-                        name="progress"
-                        onChange={handleProgressUpdate}
-                        placeholder="Haiku Title"
-                        className={"text-black"}
-                        value={updateData.progress}
-                    />
-                    <input
-                        name="wins"
-                        onChange={handleProgressUpdate}
-                        placeholder="Author"
-                        className={"text-black"}
-                        value={updateData.wins}
-                    />
-                    <input
-                        name="losses"
-                        onChange={handleProgressUpdate}
-                        placeholder="ID"
-                        className={"text-black"}
-                        value={updateData.losses}
-                    />
-                    <input
-                        name="gamePlan"
-                        onChange={handleProgressUpdate}
-                        placeholder="Category"
-                        className={"text-black"}
-                        value={updateData.gamePlan}
-                    />
+            <>
+                <MindWindow />
+                <div
+                    className={"p-3 flex flex-row sm:w-[300px] md:w-[400px] lg:w-[500px] xl:w-[700px] sm:h-[60px] md:h-[60px] lg:h-[70px] xl:h-[120px] items-start justify-around overflow-y-scroll overflow-x-hidden sm:mt-4 md:mt-6 lg:mt-8 xl:mt-10 sm:ml-5 md:ml-5"}
+                >
+                    <div className={"flex flex-col"}>
+                        HAIKU FINDER<br />
+                        <input
+                            name="progress"
+                            onChange={handleProgressUpdate}
+                            placeholder="Haiku Title"
+                            className={"text-black"}
+                            value={updateData.progress}
+                        />
+                        <input
+                            name="wins"
+                            onChange={handleProgressUpdate}
+                            placeholder="Author"
+                            className={"text-black"}
+                            value={updateData.wins}
+                        />
+                        <input
+                            name="losses"
+                            onChange={handleProgressUpdate}
+                            placeholder="ID"
+                            className={"text-black"}
+                            value={updateData.losses}
+                        />
+                        <input
+                            name="gamePlan"
+                            onChange={handleProgressUpdate}
+                            placeholder="Category"
+                            className={"text-black"}
+                            value={updateData.gamePlan}
+                        />
 
 
 
+                    </div>
+                    {/* Tech Input */}
+
+                    <div className={"flex flex-col"}>
+                        Haiku Chain<br />
+                        <textarea
+                            value={codeInput}
+                            onChange={e => setCodeInput(e.target.value)}
+                            className={"text-black"}
+                            placeholder="Add Code"
+                        />
+
+                    </div>
                 </div>
-                {/* Tech Input */}
-
-                <div className={"flex flex-col"}>
-                    Haiku Chain<br />
-                    <textarea
-                        value={codeInput}
-                        onChange={e => setCodeInput(e.target.value)}
-                        className={"text-black"}
-                        placeholder="Add Code"
-                    />
-
-                </div>
-            </div>
+            </>
         );
     };
     // Then use this in your return statement to dynamically show the content

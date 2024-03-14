@@ -11,15 +11,48 @@ export type Haikipu = {
     _id: string,
     address: string,
     title: string,
-    option: string,
+    type: string,
+    timestamp: string,
     contextSummary: string,
     haiku: string,
     explainer: string,
 };
 
-export type canvas = {
-    node: [{ id: string, x: number, y: number, type: string, content: string }],
-    edge: [{ id: string, source: string, target: string, type: string }]
+
+export type Node = {
+    id: string;
+    type: string;
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+    color: string;
+}
+
+export type TextNode = Node & {
+    text: string;
+}
+
+export type GroupNode = Node & {
+    label?: string;
+}
+
+export type Edge = {
+    id: string;
+    fromNode: string;
+    fromSide?: string;
+    fromEnd?: string;
+    toNode: string;
+    toSide?: string;
+    toEnd?: string;
+    color?: string;
+    label?: string;
+}
+
+
+export type Canvas = {
+    node: Node[],
+    edge: Edge[]
 }
 
 // Team Member

@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import scaffoldConfig from "~~/scaffold.config";
-import { HackathonEntry } from "~~/types/dbSchema";
+import { HackathonEntry, Haikipu, Canvas } from "~~/types/dbSchema";
 import { ChainWithAttributes } from "~~/utils/scaffold-eth";
 
 /**
@@ -13,20 +13,24 @@ import { ChainWithAttributes } from "~~/utils/scaffold-eth";
  */
 
 type GlobalState = {
-  nativeCurrencyPrice: number;
-  setNativeCurrencyPrice: (newNativeCurrencyPriceState: number) => void;
-  targetNetwork: ChainWithAttributes;
-  setTargetNetwork: (newTargetNetwork: ChainWithAttributes) => void;
-  hackathonEntries: HackathonEntry[];
-  setHackathonEntries: (newHackathonEntries: HackathonEntry[]) => void;
+    nativeCurrencyPrice: number;
+    setNativeCurrencyPrice: (newNativeCurrencyPriceState: number) => void;
+    targetNetwork: ChainWithAttributes;
+    setTargetNetwork: (newTargetNetwork: ChainWithAttributes) => void;
+    hackathonEntries: HackathonEntry[];
+    setHackathonEntries: (newHackathonEntries: HackathonEntry[]) => void;
+    myCanvas: Canvas;
+    setMyCanvas: (newCanvas: Canvas) => void;
 };
 
 export const useGlobalState = create<GlobalState>(set => ({
-  hackathonEntries: [],
-  setHackathonEntries: (newHackathonEntries: HackathonEntry[]) =>
-    set(() => ({ hackathonEntries: newHackathonEntries })),
-  nativeCurrencyPrice: 0,
-  setNativeCurrencyPrice: (newValue: number): void => set(() => ({ nativeCurrencyPrice: newValue })),
-  targetNetwork: scaffoldConfig.targetNetworks[0],
-  setTargetNetwork: (newTargetNetwork: ChainWithAttributes) => set(() => ({ targetNetwork: newTargetNetwork })),
+    myCanvas: { node: [], edge: [] },
+    setMyCanvas: (newCanvas: Canvas) => set(() => ({ myCanvas: newCanvas })),
+    hackathonEntries: [],
+    setHackathonEntries: (newHackathonEntries: HackathonEntry[]) =>
+        set(() => ({ hackathonEntries: newHackathonEntries })),
+    nativeCurrencyPrice: 0,
+    setNativeCurrencyPrice: (newValue: number): void => set(() => ({ nativeCurrencyPrice: newValue })),
+    targetNetwork: scaffoldConfig.targetNetworks[0],
+    setTargetNetwork: (newTargetNetwork: ChainWithAttributes) => set(() => ({ targetNetwork: newTargetNetwork })),
 }));

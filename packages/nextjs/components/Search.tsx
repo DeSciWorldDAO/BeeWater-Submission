@@ -20,7 +20,7 @@ const Search = () => {
         }).join("\n");
     }
 
-    function render_markdown(query, data) {
+    function render_markdown(query: any, data: any) {
         var md = window.markdownit();
         return data.map(function(item) {
             let rendered = "";
@@ -35,7 +35,7 @@ const Search = () => {
         }).join("\n");
     }
 
-    function render_pdf(query, data) {
+    function render_pdf(query: any, data: any) {
         return data.map(function(item) {
             let compiled_lines = item.additional.compiled.split("\n");
             let filename = compiled_lines.shift();
@@ -44,7 +44,7 @@ const Search = () => {
         }).join("\n");
     }
 
-    function render_html(query, data) {
+    function render_html(query: any, data: any) {
         return data.map(function(item) {
             let document = new DOMParser().parseFromString(item.entry, "text/html");
             // Scrub the HTML to remove any script tags and associated content
@@ -82,8 +82,8 @@ const Search = () => {
         }).join("\n");
     }
 
-    function render_xml(query, data) {
-        return data.map(function(item) {
+    function render_xml(query: any, data: any) {
+        return data.map(function(item: any) {
             return `<div class="results-xml">` +
                 `<b><a href="${item.additional.file}">${item.additional.heading}</a></b>` +
                 `<xml>${item.entry}</xml>` +
@@ -91,7 +91,7 @@ const Search = () => {
         }).join("\n");
     }
 
-    function render_multiple(query, data, type) {
+    function render_multiple(query: any, data: any, type: any) {
         let html = "";
         data.forEach(item => {
             if (item.additional.file.endsWith(".org")) {
@@ -118,7 +118,7 @@ const Search = () => {
         return html;
     }
 
-    function render_results(data, query, type) {
+    function render_results(data: any, query: any, type: any) {
         let results = "";
         if (type === "markdown") {
             results = render_markdown(query, data);
@@ -131,7 +131,7 @@ const Search = () => {
         } else if (type === "github" || type === "all" || type === "notion") {
             results = render_multiple(query, data, type);
         } else {
-            results = data.map((item) => `<div class="results-plugin">` + `<p>${item.entry}</p>` + `</div>`).join("\n")
+            results = data.map((item: any) => `<div class="results-plugin">` + `<p>${item.entry}</p>` + `</div>`).join("\n")
         }
 
         // Any POST rendering goes here.
@@ -226,7 +226,7 @@ const Search = () => {
         return url;
     }
 
-    function setQueryFieldInUrl(query) {
+    function setQueryFieldInUrl(query: any) {
         var url = new URL(window.location.href);
         url.searchParams.set("q", query);
         window.history.pushState({}, "", url.href);
@@ -242,200 +242,23 @@ const Search = () => {
             document.getElementById("query").value = query_via_url;
     });
     (
-        <>
-            <div>
-                <!--Add Header Logo and Nav Pane-->
-                <div class="khoj-header">
-                    <a class="khoj-logo" href="./index.html">
-                        <img class="khoj-logo" src="./assets/icons/khoj-logo-sideways-500.png" alt="Khoj"></img>
-                    </a>
-                    <nav class="khoj-nav">
-                        <a class="khoj-nav" href="./chat.html">💬 Chat</a>
-                        <a class="khoj-nav khoj-nav-selected" href="./search.html">🔎 Search</a>
-                        <a class="khoj-nav" href="./config.html">⚙️ Settings</a>
-                    </nav>
-                </div>
-
-                <!--Add Text Box To Enter Query, Trigger Incremental Search OnChange -->
-                <input type="text" id="query" class="option" onkeyup=incrementalSearch(event) autofocus="autofocus" placeholder="Search your knowledge base using natural language">
-
-                <!-- Section to Render Results -->
-                <div id="results"></div>
+        <div>
+            <div className="khoj-header">
+                <a className="khoj-logo" href="./index.html">
+                    <img className="khoj-logo" src="./assets/icons/khoj-logo-sideways-500.png" alt="Khoj"></img>
+                </a>
+                <nav className="khoj-nav">
+                    <a className="khoj-nav" href="./chat.html">💬 Chat</a>
+                    <a className="khoj-nav khoj-nav-selected" href="./search.html">🔎 Search</a>
+                    <a className="khoj-nav" href="./config.html">⚙️ Settings</a>
+                </nav>
             </div>
 
-            <style>
-                @media only screen and (max-width: 600px) {
-                    body {
-                    display: grid;
-                grid-template-columns: 1fr;
-                grid-template-rows: 1fr auto auto auto minmax(80px, 100%);
-                font-size: small!important;
-            }
-            body > * {
-                    grid - column: 1;
-            }
-        }
-                @media only screen and (min-width: 600px) {
-                    body {
-                    display: grid;
-                grid-template-columns: 1fr min(70vw, 100%) 1fr;
-                grid-template-rows: 1fr auto auto auto minmax(80px, 100%);
-                padding-top: 60vw;
-            }
-            body > * {
-                    grid - column: 2;
-            }
-        }
-                body {
-                    padding: 0px;
-                margin: 0px;
-                background: var(--background-color);
-                color: var(--main-text-color);
-                font-family: var(--font-family);
-                font-size: small;
-                font-weight: 300;
-                line-height: 1.5em;
-        }
-        body > * {
-                    padding: 10px;
-                margin: 10px;
-        }
-                #options {
-                    padding: 0;
-                display: grid;
-                grid-template-columns: 1fr;
-        }
-        #options > * {
-                    padding: 15px;
-                border-radius: 5px;
-                border: 1px solid #475569;
-                background: #f9fafc
-        }
-                .option:hover {
-                    box - shadow: 0 0 11px #aaa;
-        }
-        #options > button {
-                    margin - right: 10px;
-        }
+            <input type="text" id="query" className="option" onKeyDown={() => incrementalSearch(event)} autoFocus={true} placeholder="Search your knowledge base using natural language" />
 
-                #query {
-                    font - size: small;
-        }
-                #results {
-                    font - size: small;
-                margin: 0px;
-                line-height: 20px;
-        }
-                .results-image {
-                    display: grid;
-                grid-template-columns: repeat(3, 1fr);
-        }
-                .image-link {
-                    place - self: center;
-        }
-                .image {
-                    width: 20vw;
-                border-radius: 10px;
-                border: 1px solid #475569;
-        }
-                #json {
-                    white - space: pre-wrap;
-        }
-                .results-pdf,
-                .results-notion,
-                .results-html,
-                .results-plugin {
-                    text - align: left;
-                white-space: pre-line;
-        }
-                .results-markdown,
-                .results-github {
-                    text - align: left;
-        }
-                .results-org {
-                    text - align: left;
-            /* white-space: pre-line; */
-        }
-                .results-org h3 {
-                    margin: 20px 0 0 0;
-                font-size: small;
-        }
-                span.org-task-status {
-                    color: white;
-                padding: 3.5px 3.5px 0;
-                margin-right: 5px;
-                border-radius: 5px;
-                background-color: #eab308;
-                font-size: small;
-        }
-                span.org-task-status.todo {
-                    background - color: #3b82f6
-        }
-                span.org-task-status.done {
-                    background - color: #22c55e;
-        }
-                span.org-task-tag {
-                    color: white;
-                padding: 3.5px 3.5px 0;
-                margin-right: 5px;
-                border-radius: 5px;
-                border: 1px solid #475569;
-                background-color: #ef4444;
-                font-size: small;
-        }
+            <div id="results"></div>
+        </div>
+    )
+}
 
-                pre {
-                    max - width: 100;
-        }
 
-                a {
-                    color: #3b82f6;
-                text-decoration: none;
-        }
-
-                img.avatar {
-                    width: 20px;
-                height: 20px;
-                border-radius: 50%;
-        }
-
-                div#results-error,
-                div.results-markdown,
-                div.results-notion,
-                div.results-org,
-                div.results-plugin,
-                div.results-html,
-                div.results-pdf {
-                    text - align: left;
-                box-shadow: 2px 2px 2px var(--primary-hover);
-                border-radius: 5px;
-                padding: 10px;
-                margin: 10px 0;
-                border: 4px solid rgb(229, 229, 229);
-        }
-
-                div#results-error {
-                    box - shadow: 2px 2px 2px #FF5722;
-        }
-
-                img {
-                    max - width: 90%;
-        }
-
-                @keyframes gradient {
-                    0 % {
-                        background- position: 0% 50%;
-            }
-                50% {
-                    background - position: 100% 50%;
-            }
-                100% {
-                    background - position: 0% 50%;
-            }
-        }
-
-                a.khoj-logo {
-                    text - align: center;
-        }
-
-            </style>)</>}

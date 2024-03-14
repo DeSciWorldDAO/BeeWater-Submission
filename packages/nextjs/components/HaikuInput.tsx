@@ -12,11 +12,11 @@ const HaikuInput = () => {
         onSelect: (value: string) => void;
     }
 
-    const options = ["R&D", "Treasury", "Comms", "DevWork"];
+    const options = ["Personal", "Idea", "Question", "Action", "Thought"];
 
     const selection: ISelectProps = {
         options: options,
-        label: "Department",
+        label: "Domain",
         onSelect: (value: string) => { }
     }
 
@@ -59,13 +59,14 @@ const HaikuInput = () => {
 
         const handleSubmit = async (event: any) => {
             event.preventDefault();
-            const uid = await Attest(title);
-            if (!uid) return;
+            const och = await Attest(title);
+            if (!och) return;
             const requestObject: Haikipu = {
-                _id: uid,
+                _id: och,
                 address: address || '',
                 title,
-                option: selectedOption,
+                type: selectedOption,
+                timestamp: Date.now().toString(),
                 contextSummary,
                 haiku,
                 explainer
@@ -88,11 +89,10 @@ const HaikuInput = () => {
 
         const signer = useSigner();
 
-        const Attest = async (hackName: string) => {
+        const Attest = async (hackName: string, refHaiku?: string) => {
 
             const easContractAddress = "0xbD75f629A22Dc1ceD33dDA0b68c546A1c035c458";
-            const schemaUID = "0x3b1be860b499c1c49462c79befd38034914a97ff2e9e1648529106d9b271f65e";
-            "0x8d915de0951fc02b7f25f1744f77737e017ffb132057b5debd0c9ec7df2cc343";
+            const schemaUID = "0x2e2eb98fe2d821fd92652af8558c3fe3c1d9e1b5635e785dc488fef2a3928bfd";
             const eas = new EAS(easContractAddress);
             // Signer must be an ethers-like signer.
 
@@ -100,10 +100,15 @@ const HaikuInput = () => {
             eas.connect(signer);
             // Initialize SchemaEncoder with the schema string
             const offchain = await eas.getOffchain();
-            const schemaEncoder = new SchemaEncoder("string hackName");
+
+
+            // Initialize SchemaEncoder with the schema string
+            const schemaEncoder = new SchemaEncoder("string title,string[] haikuIds");
             const encodedData = schemaEncoder.encodeData([
-                { name: "hackName", value: hackName, type: "string" }
+                { name: "title", value: hackName, type: "string" },
+                { name: "haikuIds", value: [], type: "string[]" }
             ]);
+
             const offchainAttestation = await offchain.signOffchainAttestation({
                 recipient: address || "0x",
                 // Unix timestamp of when attestation expires. (0 for no expiration)
@@ -112,7 +117,7 @@ const HaikuInput = () => {
                 time: BigInt(Date.now()),
                 revocable: true, // Be aware that if your schema is not revocable, this MUST be false
                 schema: schemaUID,
-                refUID: '0x0000000000000000000000000000000000000000000000000000000000000000',
+                refUID: refHaiku || '0x0000000000000000000000000000000000000000000000000000000000000000',
                 data: encodedData,
             }, signer);
 
