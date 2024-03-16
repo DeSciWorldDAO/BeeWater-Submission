@@ -30,7 +30,7 @@ export class HaikuCanvas {
     }
     // create a new haiku node
     async addNewHaikuNode(context: any): Promise<HaikuNode> {
-        const response = await fetch("/api/newHaiku", {
+        const response = await fetch("/api/gen/haiku", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -46,7 +46,7 @@ export class HaikuCanvas {
 
     async addCanvasHaikuNode(): Promise<HaikuNode> {
 
-        const response = await fetch("/api/canvasHaiku", {
+        const response = await fetch("/api/gen/haiku", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -56,7 +56,7 @@ export class HaikuCanvas {
         const parsed: HaikuNode = await response.json();
         this.nonce++;
         this.haikuchain.push(parsed.haikipu);
-        this.addEdge(this.haikuchain.length - 2, this.haikuchain.length - 1);
+        this.addChainEdge(this.haikuchain.length - 2, this.haikuchain.length - 1);
 
         return parsed;
     }
@@ -79,6 +79,18 @@ export class HaikuCanvas {
         };
         this.canvas.edge.push(newEdge);
     }
+
+    addChainEdge(from: number, to: number, label?: string): void {
+        const fromNode = this.haikuchain[from]._id;
+        const toNode = this.haikuchain[to]._id;
+        const newEdge = {
+            id: `${fromNode}-${toNode}`,
+            label: label || "haikuchain",
+            fromNode,
+            toNode
+        };
+        this.canvas.edge.push(newEdge);
+    }
     // Get project information
     //
     getProjectInfo(): Canvas {
@@ -86,7 +98,7 @@ export class HaikuCanvas {
         return canvas;
     }
     async loadCanvas(): Promise<void> {
-        const response = await fetch(`/api/canvasHaiku/?id=${this.id}`, {
+        const response = await fetch(`/api/mongo/canvas/?id=${this.id}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",

@@ -69,7 +69,7 @@ export async function createHackathonEntry(hackathonProject: HackathonEntry): Pr
         hackathonProject.teamMembers,
         hackathonProject.eval,
         hackathonProject.progressUpdates);
-    const response = await fetch("/api/newHack", {
+    const response = await fetch("/api/gen/hack", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -95,7 +95,7 @@ export async function updateHackathonEntry(hackathonProject: HackathonEntry): Pr
         hackathonProject.teamMembers,
         hackathonProject.eval,
         hackathonProject.progressUpdates);
-    const response = await fetch("/api/newUpdate", {
+    const response = await fetch("/api/gen/update", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

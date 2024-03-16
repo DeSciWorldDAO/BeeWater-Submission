@@ -55,7 +55,7 @@ export type Edge = {
 
 
 export type Canvas = {
-    node: Node[],
+    node: HaikuNode[],
     edge: Edge[]
 }
 

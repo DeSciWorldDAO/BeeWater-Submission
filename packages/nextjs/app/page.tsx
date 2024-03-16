@@ -114,7 +114,7 @@ const Home: NextPage = () => {
     };
 
     const canvasDb = async () => {
-        const data = await fetch(`api/mongoCanvas?id=${address}`)
+        const data = await fetch(`api/mongo/canvas?id=${address}`)
         const res: HaikuCanvas[] = await data.json()
         setCanvasIndex(res.length - 1);
         setCanvas(res[res.length - 1]);
@@ -123,7 +123,7 @@ const Home: NextPage = () => {
     };
 
     const haikuCall = async () => {
-        const data = await fetch(`api/haikuMongo?type="RnD"`)
+        const data = await fetch(`api/mongo/haiku?type="RnD"`)
         const res: Haikipu[] = await data.json()
         setHaikuDb(res);
         console.log(res);
@@ -592,6 +592,7 @@ const Home: NextPage = () => {
             </div >
         )
     };
+
     const HaikuFeed = () => {
         return (
             <div className="absolute -top-2 h-[300px] w-[700px]  overflow-x-hidden overflow-y-scroll"

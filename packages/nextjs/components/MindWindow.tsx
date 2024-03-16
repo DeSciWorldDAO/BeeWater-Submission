@@ -2,8 +2,10 @@ import React, { useEffect, useRef, useState } from "react";
 import "~~/styles/dropup.css";
 import "~~/styles/styles.css";
 import "~~/styles/window.css";
+import { useGlobalState } from "~~/services/store/store";
 const MindWindow = () => {
-
+    const [canvasIndex, setCanvasIndex] = useState(0);
+    const { setMyCanvas, myCanvas, canvasDb } = useGlobalState();
     const windowRef = useRef<HTMLDivElement>(null);
     const titleRef = useRef<HTMLDivElement>(null); // Reference for the title bar
 
@@ -116,6 +118,17 @@ const MindWindow = () => {
         };
     }, []);
 
+    const handleCanvas = () => {
+        console.log("Canvas Index: ", canvasIndex, canvasDb);
+        if (canvasIndex - 1 < 0) {
+            setCanvasIndex(canvasDb.length - 1);
+        } else {
+            setCanvasIndex(canvasIndex - 1);
+        }
+
+        setMyCanvas(canvasDb[canvasIndex]);
+    }
+
     return (
         <div id="desktop" className="bg desktop">
             <div ref={windowRef} id="window" className="window">
@@ -129,7 +142,25 @@ const MindWindow = () => {
                 <div className="drag-ld"></div>
                 <div className="p-12 content overflow-y-auto">
                     <h1>MindWindow Explorer</h1>
+                    Canvas: {myCanvas.title}<br />
+                    Owner: {myCanvas.owner.substring(0, 7)}
 
+                    <div className="canvas">
+                        {myCanvas.canvas.node && myCanvas.canvas.node.map((node, index) => {
+                            return (
+
+                                <div className="p-2 border-2 text-sm h-1/3 w-1/3 top-0 left-0 relative backdrop-blur-2xl">
+                                    <h1>{node.id.substring(0, 12)}</h1>
+                                    <p>{node.haikipu.title}</p>
+                                    <p>{node.type}</p>
+                                    <p>{node.haikipu.haiku}</p>
+
+                                </div>
+                            )
+                        })}
+
+                    </div>
+                    <button onClick={handleCanvas} className="btn btn-primary">Change Canvas</button>
                 </div>
             </div>
         </div>

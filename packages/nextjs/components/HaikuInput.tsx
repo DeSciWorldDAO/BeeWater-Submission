@@ -73,7 +73,7 @@ const HaikuInput = () => {
                 haiku,
                 explainer
             };
-            const response = await fetch("/api/newHaiku", {
+            const response = await fetch("/api/gen/haiku", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -89,7 +89,7 @@ const HaikuInput = () => {
             setExplainer(data.explainer);
             const canvas = await createCanvas(data)
             console.log(canvas);
-            setMyCanvas(canvas.canvas);
+            setMyCanvas(canvas);
         };
 
         const signer = useSigner();

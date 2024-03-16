@@ -1,8 +1,9 @@
+
 import { NextResponse } from "next/server";
-import { createChatEngine } from "../chat/engine";
-import { storeEvaluationByProject } from "../metrics/evaluation";
-import { storePrompt } from "../metrics/prompt";
-import { storeUsageByEmbeddingId } from "../metrics/usage";
+import { createChatEngine } from "../../chat/engine";
+import { storeEvaluationByProject } from "../../metrics/evaluation";
+import { storePrompt } from "../../metrics/prompt";
+import { storeUsageByEmbeddingId } from "../../metrics/usage";
 // Assumed environme
 import {
     ChatMessage,
@@ -12,9 +13,9 @@ import {
     storageContextFromDefaults,
 } from "llamaindex";
 import { OpenAI, serviceContextFromDefaults } from "llamaindex";
-import { Db, MongoClient } from "mongodb";
+import { Db, MongoClient, ObjectId } from "mongodb";
 // Assuming we've defined or imported types for the Hackathon Application
-import type { AIEvaluation, HackathonEntry } from "~~/types/dbSchema";
+import type { AIEvaluation, HackathonEntry, Haikipu } from "~~/types/dbSchema";
 
 
 const url = process.env.MONGODB_URL || 'mongodb+srv://At0x:r8MzJR2r4A1xlMOA@cluster2.8l2zh.mongodb.net/?retryWrites=true&w=majority'
@@ -55,58 +56,49 @@ async function llamaindex(payload: string, id: string) {
 
 async function runLlamaAndStore(
     db: Db,
-    hackathonApp: any,
-    enhancedProposal: AIEvaluation,
     usedEmbeddingIds: string[],
     promptMessages: any,
-    promptResponse: any,
-    evaluation: AIEvaluation,
+    haikipu: Haikipu,
 ) {
-    const projectId = hackathonApp.projectId || hackathonApp.id;
-    const { embeddingId } = await llamaindex(JSON.stringify(hackathonApp), projectId); //should we modify this id?
+    const haikuId = haikipu._id;
+    const { embeddingId } = await llamaindex(JSON.stringify(haikipu), haikuId); //should we modify this id?
     // store in DB
     const promptResult = await storePrompt(
         db,
-        hackathonApp,
+        haikipu,
         promptMessages,
         embeddingId,
         usedEmbeddingIds,
     );
-    const usageResult = await storeUsageByEmbeddingId(db, projectId, embeddingId, usedEmbeddingIds);
+    const usageResult = await storeUsageByEmbeddingId(db, haikuId, embeddingId, usedEmbeddingIds);
+    const evaluationResult = await storeEvaluationByProject(db, haikuId, usedEmbeddingIds, embeddingId, haikipu);
     return {
         promptResult,
         usageResult,
+        evaluationResult,
     };
 }
 
 // Revised function suited for hackathon application data
-async function generateHackathonProposal(hackathonApp: HackathonEntry) {
+async function generateHackathonProposal(haikiput: Haikipu) {
     const messages: ChatMessage[] = [
         {
             role: "system",
-            content: `You are an AI consultant specializing in hackathon project conceptualization. Given a project name, problem statement, solution description, and technology stack, Ponder on the different aspects of the presented project and give a score for each domain. Use the evaluationRemarks to appraise the projects and compare them to each other. Reply in JSON format using the AIEvaluation type.`,
+            content: `You are a coordination engine. Your role is to encode the semantic load of the provided context into haikipus which are a data object focused on coordination. You will recieve a context summary and must encode a haiku with the semantic load which aims to foster coordination and an a connection with the meta-context which relates other haikipus to the haiku. Prioritize  coherence to the data available to you. Respond in JSON format with the Haikipu type`
         },
         {
             role: "assistant",
             content: `
-            type AIEvaluation = {
-         coherenceScore: number;
-         feasibilityScore: number;
-         innovationScore: number;
-         funScore: number;
-         evaluationRemarks: string;
-        codeSnippets: CodeEntry[];
+            type Haikipu = {
+            haiku: string;
+            contextConnection: string;
                 }
             `,
         },
         {
             role: "user",
-            content: `Review the hackathon entry, assign scores and provide evaluation remarks.
-  _id: ${hackathonApp._id};
-  projectName: ${hackathonApp.hack.projectName};
-  problemStatement: ${hackathonApp.hack.problemStatement}
-  solutionDescription: ${hackathonApp.hack.solutionDescription}
-  technologyStack: ${hackathonApp.hack.technologyStack.join(", ")}
+            content: `Review the context summary: ${haikiput.contextSummary}, use it to generate a haikipu for ${haikiput.title} classified as ${haikiput.type}.
+
             `,
         },
     ];
@@ -131,7 +123,7 @@ async function generateHackathonProposal(hackathonApp: HackathonEntry) {
     // Convert message content from Vercel/AI format to LlamaIndex/OpenAI format
 
     const response = await chatEngine.chat({
-        message: "Evaluate the hackathon entry and provide scores and remarks.",
+        message: "Evaluate the summary and create a Haikipu.",
         chatHistory: messages,
     });
     console.log({
@@ -143,59 +135,53 @@ async function generateHackathonProposal(hackathonApp: HackathonEntry) {
     });
     const usedEmbeddingIds = response.sourceNodes?.map(node => node.id_) || [];
     const parsedResponse = JSON.parse(response.response);
-    const evaluation: AIEvaluation = {
-        coherenceScore: parsedResponse.coherenceScore,
-        feasibilityScore: parsedResponse.feasibilityScore,
-        innovationScore: parsedResponse.innovationScore,
-        funScore: parsedResponse.funScore,
-        evaluationRemarks: parsedResponse.evaluationRemarks,
-        codeSnippets: parsedResponse.codeSnippets,
+    const haikipu: Haikipu = {
+        title: haikiput.title,
+        _id: haikiput._id,
+        address: haikiput.address,
+        timestamp: haikiput.timestamp,
+        type: haikiput.type,
+        contextSummary: haikiput.contextSummary,
+        haiku: parsedResponse.haiku,
+        explainer: parsedResponse.contextConnection,
     };
 
-    const rawOutput: AIEvaluation = JSON.parse(response.response);
-    return { enhancedProposal: rawOutput, messages, response: parsedResponse, usedEmbeddingIds, evaluation };
+    return { haikipu, messages, usedEmbeddingIds };
 }
-
 
 export const maxDuration = 120; // This function can run for a maximum of 5 seconds
 // Example usage for POST handler or another part of your application
 export async function POST(request: Request) {
     try {
-        const hackathonApp = await request.json(); // Assuming the request body is properly formatted
-        console.log(hackathonApp);
-        const { enhancedProposal, usedEmbeddingIds, messages, response, evaluation } = await generateHackathonProposal(
-            hackathonApp,
+        const haikiput: Haikipu = await request.json(); // Assuming the request body is properly formatted
+        console.log(haikiput);
+        const { usedEmbeddingIds, messages, haikipu } = await generateHackathonProposal(
+            haikiput,
         );
-        hackathonApp.eval.push(enhancedProposal);
 
 
 
         // Proceed with storing the enhanced proposal in MongoDB or returning it in the response
         //
         const db = client.db("nerdWorkState"); // Connect to the database
-        const hackCodex = db.collection("nerdWork"); //
+        const haikuCodex = db.collection("nerdHaikus"); //
         // assumed input
         // run this function asynchronously, do not block for it to finish
-        runLlamaAndStore(db, hackathonApp, enhancedProposal, usedEmbeddingIds, messages, response, evaluation);
+        runLlamaAndStore(db, usedEmbeddingIds, messages, haikipu);
 
-        await hackCodex.updateOne(
+        await haikuCodex.updateOne(
             {
-                _id: hackathonApp._id,
-                address: hackathonApp.address,
-                hack: hackathonApp.hack,
+                id: haikipu._id,
+                address: haikipu.address,
+                haikipu,
             },
-            {
-                $addToSet: {
-                    eval: enhancedProposal,
-                    progressUpdates: hackathonApp.progressUpdates[hackathonApp.progressUpdates.length - 1],
-                },
-            },
+            { $setOnInsert: { haikipu: haikipu } },
             { upsert: true }, // this creates new document if none match the filter
         );
 
         // Implementation depends on application requirements.
         //
-        return NextResponse.json(hackathonApp, { status: 200 });
+        return NextResponse.json(haikipu, { status: 200 });
         // Implementation depends on application requirements.
         //
     } catch (e: any) {

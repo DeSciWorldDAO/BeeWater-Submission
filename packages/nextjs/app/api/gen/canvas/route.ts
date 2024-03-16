@@ -85,9 +85,8 @@ export async function POST(request: Request) {
             {
                 id: haikipu.id,
                 address: haikipu.owner,
-                haikipu,
             },
-            { $setOnInsert: { haikipu } },
+            { $setOnInsert: haikipu },
             { upsert: true }, // this creates new document if none match the filter
         );
 
