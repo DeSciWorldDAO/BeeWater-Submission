@@ -80,6 +80,7 @@ const HaikuInput = () => {
                 },
                 body: JSON.stringify(requestObject),
             });
+
             // Here you would typically send the requestObject to a server or API
             const data = await response.json();
 
@@ -91,6 +92,8 @@ const HaikuInput = () => {
             console.log(canvas);
             setMyCanvas(canvas);
         };
+
+
 
         const signer = useSigner();
 

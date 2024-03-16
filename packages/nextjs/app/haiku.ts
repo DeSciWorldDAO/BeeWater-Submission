@@ -46,7 +46,7 @@ export class HaikuCanvas {
 
     async addCanvasHaikuNode(): Promise<HaikuNode> {
 
-        const response = await fetch("/api/gen/haiku", {
+        const response = await fetch("/api/gen/canvasUpdate", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -54,16 +54,12 @@ export class HaikuCanvas {
             body: JSON.stringify(this),
         });
         const parsed: HaikuNode = await response.json();
-        this.nonce++;
-        this.haikuchain.push(parsed.haikipu);
-        this.addChainEdge(this.haikuchain.length - 2, this.haikuchain.length - 1);
-
         return parsed;
     }
 
     addMyHaikuNode(haikuNode: HaikuNode): void {
         if (haikuNode.haikipu.address !== this.owner) return console.error("Invalid owner");
-        this.nonce++;
+        this.nonce + 1;
         this.canvas.node.push(haikuNode);
     }
 

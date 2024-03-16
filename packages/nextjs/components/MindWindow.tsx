@@ -3,11 +3,27 @@ import "~~/styles/dropup.css";
 import "~~/styles/styles.css";
 import "~~/styles/window.css";
 import { useGlobalState } from "~~/services/store/store";
+import { HaikuCanvas } from "~~/app/haiku";
+import toast from "react-hot-toast";
 const MindWindow = () => {
     const [canvasIndex, setCanvasIndex] = useState(0);
     const { setMyCanvas, myCanvas, canvasDb } = useGlobalState();
     const windowRef = useRef<HTMLDivElement>(null);
     const titleRef = useRef<HTMLDivElement>(null); // Reference for the title bar
+    const hc = new HaikuCanvas(myCanvas.owner, myCanvas.id)
+    hc.canvas = myCanvas.canvas
+    hc.nonce = myCanvas.nonce
+    const update = hc.addCanvasHaikuNode
+
+    const updateHandler = async () => {
+        try {
+            console.log(hc);
+            await update();
+            toast.success("Canvas Updated");
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     useEffect(() => {
         const wwindow = windowRef.current;
@@ -143,15 +159,15 @@ const MindWindow = () => {
                 <div className="p-12 content overflow-y-auto">
                     <h1>MindWindow Explorer</h1>
                     Canvas: {myCanvas.title}<br />
-                    Owner: {myCanvas.owner.substring(0, 7)}
+                    Owner: {myCanvas.owner?.substring(0, 7)}
 
                     <div className="canvas">
                         {myCanvas.canvas.node && myCanvas.canvas.node.map((node, index) => {
                             return (
 
                                 <div className="p-2 border-2 text-sm h-1/3 w-1/3 top-0 left-0 relative backdrop-blur-2xl">
-                                    <h1>{node.id.substring(0, 12)}</h1>
-                                    <p>{node.haikipu.title}</p>
+                                    <h1>{node.id?.substring(0, 12)}</h1>
+                                    <p>{node.haikipu?.title}</p>
                                     <p>{node.type}</p>
                                     <p>{node.haikipu.haiku}</p>
 
@@ -161,6 +177,7 @@ const MindWindow = () => {
 
                     </div>
                     <button onClick={handleCanvas} className="btn btn-primary">Change Canvas</button>
+                    <button onClick={updateHandler} className="btn btn-primary">Update Canvas</button>
                 </div>
             </div>
         </div>
