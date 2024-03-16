@@ -48,6 +48,8 @@ const Home: NextPage = () => {
         actionItems: [],
         codeSnippets: [] as CodeEntry[],
     });
+
+
     const [myProject, setMyProject] = useState<HackathonEntry>({} as HackathonEntry);
     const [techInput, setTechInput] = useState("");
     const [actionInput, setActionInput] = useState("");
@@ -71,7 +73,33 @@ const Home: NextPage = () => {
     const signer = useSigner();
     const account = useAccount();
     const usrAddress = account?.address;
+    // call db for user
+    useEffect(() => {
+        if (address == null) return
+        dbCall()
+        haikuCall()
+    }, [address])
 
+    useEffect(() => {
+        if (db == null) return
+        setMyProject(db[entryIndex])
+    }, [entryIndex, db])
+    // Handler for text input changes
+    //
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setEntry({ ...entry, [name]: value });
+    };
+    const handleAddNode = () => {
+        if (!canvas) return;
+        const newNode: HaikuNode = { id: haiku._id, type: "haiku", x: 100, y: 100, height: 1, width: 1, color: "1", haikipu: haiku };
+        setCanvas({ ...canvas, node: [...canvas.node, newNode] });
+    }
+    const handleAddEdge = (from: string, to: string) => {
+        if (!canvas) return;
+        const newEdge: Edge = { id: `${from}-${to}`, fromNode: from, toNode: to, color: "1" };
+        setCanvas({ ...canvas, edge: [...canvas.edge, newEdge] });
+    }
 
 
     const dbCall = async () => {
@@ -118,22 +146,7 @@ const Home: NextPage = () => {
         toast.success(`Eval Index: ${evalIndex}`)
     }
 
-    // call db for user
-    useEffect(() => {
-        if (address == null) return
-        dbCall()
-        haikuCall()
-    }, [address])
 
-    useEffect(() => {
-        if (db == null) return
-        setMyProject(db[entryIndex])
-    }, [entryIndex, db])
-    // Handler for text input changes
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setEntry({ ...entry, [name]: value });
-    };
     const Attest = async (hackName: string) => {
 
         const easContractAddress = "0xbD75f629A22Dc1ceD33dDA0b68c546A1c035c458";
@@ -273,16 +286,6 @@ const Home: NextPage = () => {
 
     const haiku = haikuDb[0]
 
-    const handleAddNode = () => {
-        if (!canvas) return;
-        const newNode: HaikuNode = { id: haiku._id, type: "haiku", x: 100, y: 100, height: 1, width: 1, color: "1", haikipu: haiku };
-        setCanvas({ ...canvas, node: [...canvas.node, newNode] });
-    }
-    const handleAddEdge = (from: string, to: string) => {
-        if (!canvas) return;
-        const newEdge: Edge = { id: `${from}-${to}`, fromNode: from, toNode: to, color: "1" };
-        setCanvas({ ...canvas, edge: [...canvas.edge, newEdge] });
-    }
 
     // ProjectDetails.js
     //

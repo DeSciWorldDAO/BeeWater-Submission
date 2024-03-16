@@ -13,7 +13,7 @@ export type Haikipu = {
     title: string,
     type: string,
     timestamp: string,
-    contextSummary: string,
+    contextSummary: any,
     haiku: string,
     explainer: string,
 };
@@ -62,8 +62,9 @@ export type Canvas = {
 // Team Member
 export type TeamMember = {
     name: string;
-    email: string;
-    role: string;
+    email?: string;
+    skills: string[];
+    bio: string;
 };
 
 export type CodeEntry = {
@@ -77,8 +78,8 @@ export type ProgressUpdate = {
     wins: string;
     losses: string;
     gamePlan: string;
-    actionItems: string[];
-    codeSnippets: CodeEntry[];
+    actionItems?: string[];
+    codeSnippets?: CodeEntry[];
 };
 
 export type HackathonProjectAttributes = {

@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { HaikuCanvas } from "~~/app/haiku";
 import scaffoldConfig from "~~/scaffold.config";
 import { HackathonEntry, Haikipu, Canvas } from "~~/types/dbSchema";
 import { ChainWithAttributes } from "~~/utils/scaffold-eth";

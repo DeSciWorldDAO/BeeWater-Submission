@@ -4,8 +4,10 @@ import type { Haikipu } from '~~/types/dbSchema';
 import { useSigner } from '~~/utils/wagmi-utils';
 import { EAS, SchemaEncoder } from '@ethereum-attestation-service/eas-sdk';
 import toast from 'react-hot-toast';
+import { createCanvas } from '~~/app/haiku';
+import { useGlobalState } from "~~/services/store/store"
 const HaikuInput = () => {
-
+    const { setMyCanvas } = useGlobalState();
     interface ISelectProps {
         options: string[];
         label: string;
@@ -85,6 +87,9 @@ const HaikuInput = () => {
             // For demonstration, we'll just display the haiku and explainer
             setHaiku(data.haiku);
             setExplainer(data.explainer);
+            const canvas = await createCanvas(data)
+            console.log(canvas);
+            setMyCanvas(canvas.canvas);
         };
 
         const signer = useSigner();
@@ -196,3 +201,4 @@ const HaikuInput = () => {
         </div>)
 }
 export default HaikuInput;
+

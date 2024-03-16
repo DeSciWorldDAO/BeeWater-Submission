@@ -97,7 +97,7 @@ async function generateHackathonProposal(haikiput: Haikipu) {
         },
         {
             role: "user",
-            content: `Review the context summary: ${haikiput.contextSummary}, use it to generate a haikipu for ${haikiput.title} classified as ${haikiput.option}.
+            content: `Review the context summary: ${haikiput.contextSummary}, use it to generate a haikipu for ${haikiput.title} classified as ${haikiput.type}.
 
             `,
         },
@@ -139,7 +139,8 @@ async function generateHackathonProposal(haikiput: Haikipu) {
         title: haikiput.title,
         _id: haikiput._id,
         address: haikiput.address,
-        option: haikiput.option,
+        timestamp: haikiput.timestamp,
+        type: haikiput.type,
         contextSummary: haikiput.contextSummary,
         haiku: parsedResponse.haiku,
         explainer: parsedResponse.contextConnection,
