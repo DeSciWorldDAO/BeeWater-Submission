@@ -8,7 +8,7 @@ import {
     VectorStoreIndex,
     storageContextFromDefaults,
 } from "llamaindex";
-import { MongoClient } from "mongodb";
+import { MongoClient, ObjectId } from "mongodb";
 // Assuming we've defined or imported types for the Hackathon Application
 import { HaikuCanvas } from "~~/app/haiku";
 

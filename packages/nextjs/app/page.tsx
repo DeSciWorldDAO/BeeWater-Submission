@@ -18,6 +18,7 @@ import DailyLog from "~~/components/dailyLog";
 import { Faucet } from "~~/components/scaffold-eth/Faucet";
 import MindWindow from "~~/components/MindWindow";
 import { useGlobalState } from "~~/services/store/store";
+import { HaikuCanvas } from "./haiku";
 
 const Home: NextPage = () => {
     const { address } = useAccount();
@@ -62,14 +63,15 @@ const Home: NextPage = () => {
     const [evals, setEvals] = useState<AIEvaluation[]>();
     const [evalIndex, setEvalIndex] = useState<number>(0);
     const [entryIndex, setEntryIndex] = useState<number>(0);
+    const [canvasIndex, setCanvasIndex] = useState<number>(0);
     const [isProject, setIsProject] = useState(true);
     const [isUpdate, setIsUpdate] = useState(false);
     const [haikuDb, setHaikuDb] = useState<Haikipu[]>([]);
     const state = useGlobalState();
 
     // web3 config
-    const canvas = state.myCanvas
-    const setCanvas = state.setMyCanvas
+    const canvas = state.myCanvas?.canvas
+    const { setMyCanvas: setCanvas, setCanvasDb, canvasDb: myCanvasDb } = useGlobalState()
     const signer = useSigner();
     const account = useAccount();
     const usrAddress = account?.address;
@@ -78,6 +80,7 @@ const Home: NextPage = () => {
         if (address == null) return
         dbCall()
         haikuCall()
+        canvasDb()
     }, [address])
 
     useEffect(() => {
@@ -93,12 +96,10 @@ const Home: NextPage = () => {
     const handleAddNode = () => {
         if (!canvas) return;
         const newNode: HaikuNode = { id: haiku._id, type: "haiku", x: 100, y: 100, height: 1, width: 1, color: "1", haikipu: haiku };
-        setCanvas({ ...canvas, node: [...canvas.node, newNode] });
     }
     const handleAddEdge = (from: string, to: string) => {
         if (!canvas) return;
         const newEdge: Edge = { id: `${from}-${to}`, fromNode: from, toNode: to, color: "1" };
-        setCanvas({ ...canvas, edge: [...canvas.edge, newEdge] });
     }
 
 
@@ -112,6 +113,15 @@ const Home: NextPage = () => {
         console.log(res);
     };
 
+    const canvasDb = async () => {
+        const data = await fetch(`api/mongoCanvas?id=${address}`)
+        const res: HaikuCanvas[] = await data.json()
+        setCanvasIndex(res.length - 1);
+        setCanvas(res[res.length - 1]);
+        setCanvasDb(res);
+        console.log(res);
+    };
+
     const haikuCall = async () => {
         const data = await fetch(`api/haikuMongo?type="RnD"`)
         const res: Haikipu[] = await data.json()
@@ -119,10 +129,19 @@ const Home: NextPage = () => {
         console.log(res);
     };
 
-    const embedCall = async () => {
-        const data = await fetch(`api/mongoUpload`)
-        console.log(data);
-    };
+
+    const canvasIndexHandler = () => {
+        if (myCanvasDb == undefined) return;
+        if (canvasIndex - 1 >= 0) {
+            setCanvasIndex(canvasIndex - 1);
+        } else {
+            setCanvasIndex(myCanvasDb.length - 1)
+        }
+        setCanvas(myCanvasDb[canvasIndex])
+        toast.success(`Entry Index: ${canvasIndex}`)
+    }
+
+
 
     const indexHandler = () => {
         if (db == undefined) return;
@@ -231,7 +250,7 @@ const Home: NextPage = () => {
 
     const handleAddTeamMember = () => {
         if (!teamInput) return; // Similar guard
-        const newMember = { name: teamInput, email: teamInputEmail, role: teamInputRole }; // Simplify for demonstration
+        const newMember: TeamMember = { name: teamInput, email: teamInputEmail, skills: [teamInputRole], bio: "" }; // Simplify for demonstration
         setEntry({
             ...entry,
             teamMembers: [...entry.teamMembers, newMember],
@@ -247,26 +266,7 @@ const Home: NextPage = () => {
         setUpdateData({ ...updateData, [name]: value });
     };
     // Handlers for tech stack and team members
-    const handleAddActionItems = () => {
-        if (!actionInput) return; // Prevent adding empty values
-        setUpdateData({
-            ...updateData,
-            actionItems: [...updateData.actionItems, actionInput],
-        });
-        setActionInput(""); // Reset input
-    };
-    // ProjectDetails.js
-    const handleAddCode = () => {
-        if (!codeInput) return; // Similar guard
-        const newCode = { code: codeInput, comment: codeComment, language: codeLanguage }; // Simplify for demonstration
-        setUpdateData({
-            ...updateData,
-            codeSnippets: [...updateData.codeSnippets, newCode],
-        });
-        setCodeInput("");
-        setCodeComment("");
-        setCodeLanguage(""); // Reset input
-    };
+
 
     // Handler for text input changes
     const handleHackChange = (e: React.ChangeEvent<HTMLInputElement>) => {

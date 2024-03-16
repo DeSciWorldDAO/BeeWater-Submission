@@ -44,21 +44,6 @@ export class HaikuCanvas {
         return parsed;
     }
 
-    async loadCanvas(): Promise<void> {
-        const response = await fetch(`/api/canvasHaiku/?id=${this.id}`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
-        const call: any[] = await response.json();
-        const parsed = call[0];
-        this.title = parsed.haikipu.title;
-        this.canvas = parsed.haikipu.canvas;
-        this.haikuchain = parsed.haikipu.haikuchain;
-        this.nonce = parsed.haikipu.nonce;
-    }
-
     async addCanvasHaikuNode(): Promise<HaikuNode> {
 
         const response = await fetch("/api/canvasHaiku", {
@@ -100,6 +85,22 @@ export class HaikuCanvas {
         const canvas = this.canvas
         return canvas;
     }
+    async loadCanvas(): Promise<void> {
+        const response = await fetch(`/api/canvasHaiku/?id=${this.id}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        const call: any[] = await response.json();
+        const parsed = call[0];
+        this.title = parsed.haikipu.title;
+        this.canvas = parsed.haikipu.canvas;
+        this.haikuchain = parsed.haikipu.haikuchain;
+        this.nonce = parsed.haikipu.nonce;
+    }
+
+
 }
 
 

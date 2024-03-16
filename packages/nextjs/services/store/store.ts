@@ -20,13 +20,17 @@ type GlobalState = {
     setTargetNetwork: (newTargetNetwork: ChainWithAttributes) => void;
     hackathonEntries: HackathonEntry[];
     setHackathonEntries: (newHackathonEntries: HackathonEntry[]) => void;
-    myCanvas: Canvas;
-    setMyCanvas: (newCanvas: Canvas) => void;
+    canvasDb: HaikuCanvas[];
+    setCanvasDb: (newCanvasDb: HaikuCanvas[]) => void;
+    myCanvas: HaikuCanvas;
+    setMyCanvas: (newCanvas: HaikuCanvas) => void;
 };
 
 export const useGlobalState = create<GlobalState>(set => ({
-    myCanvas: { node: [], edge: [] },
-    setMyCanvas: (newCanvas: Canvas) => set(() => ({ myCanvas: newCanvas })),
+    canvasDb: [],
+    setCanvasDb: (newCanvasDb: HaikuCanvas[]) => set(() => ({ canvasDb: newCanvasDb })),
+    myCanvas: {} as HaikuCanvas,
+    setMyCanvas: (newCanvas: HaikuCanvas) => set(() => ({ myCanvas: newCanvas })),
     hackathonEntries: [],
     setHackathonEntries: (newHackathonEntries: HackathonEntry[]) =>
         set(() => ({ hackathonEntries: newHackathonEntries })),
