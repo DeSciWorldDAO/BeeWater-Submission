@@ -1,10 +1,34 @@
+
+
 import React, { useEffect, useRef, useState } from "react";
+import ReactDOM from 'react-dom';
 import "~~/styles/dropup.css";
 import "~~/styles/styles.css";
 import "~~/styles/window.css";
 import { useGlobalState } from "~~/services/store/store";
 import { HaikuCanvas } from "~~/app/haiku";
 import toast from "react-hot-toast";
+import cytoscape from 'cytoscape';
+import fcose from 'cytoscape-fcose';
+import CytoscapeComponent from 'react-cytoscapejs';
+
+class MyApp extends React.Component {
+    constructor(props: any) {
+        super(props);
+    }
+
+    render() {
+        const elements = [
+            { data: { id: 'one', label: 'Node 1' }, position: { x: 0, y: 0 } },
+            { data: { id: 'two', label: 'Node 2' }, position: { x: 100, y: 0 } },
+            { data: { source: 'one', target: 'two', label: 'Edge from Node1 to Node2' } }
+        ];
+
+        return <CytoscapeComponent elements={elements} style={{ width: '600px', height: '600px' }} />;
+    }
+}
+
+
 const MindWindow = () => {
     const [canvasIndex, setCanvasIndex] = useState(0);
     const { setMyCanvas, myCanvas, canvasDb } = useGlobalState();
@@ -14,6 +38,7 @@ const MindWindow = () => {
     hc.canvas = myCanvas.canvas
     hc.nonce = myCanvas.nonce
     const update = hc.addCanvasHaikuNode
+
 
     const updateHandler = async () => {
         try {
@@ -145,6 +170,9 @@ const MindWindow = () => {
         setMyCanvas(canvasDb[canvasIndex]);
     }
 
+
+    //ReactDOM.render(React.createElement(MyApp, document.getElementById('cy')));
+
     return (
         <div id="desktop" className="bg desktop">
             <div ref={windowRef} id="window" className="window">
@@ -162,6 +190,7 @@ const MindWindow = () => {
                     Owner: {myCanvas.owner?.substring(0, 7)}
 
                     <div className="canvas">
+                        <div id="cy" />
                         {myCanvas.canvas.node && myCanvas.canvas.node.map((node, index) => {
                             return (
 
@@ -181,7 +210,8 @@ const MindWindow = () => {
                 </div>
             </div>
         </div>
-    );
-};
 
+    );
+
+};
 export default MindWindow;
