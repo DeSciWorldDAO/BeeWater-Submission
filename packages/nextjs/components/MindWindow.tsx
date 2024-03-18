@@ -8,25 +8,7 @@ import "~~/styles/window.css";
 import { useGlobalState } from "~~/services/store/store";
 import { HaikuCanvas } from "~~/app/haiku";
 import toast from "react-hot-toast";
-import cytoscape from 'cytoscape';
-import fcose from 'cytoscape-fcose';
-import CytoscapeComponent from 'react-cytoscapejs';
-
-class MyApp extends React.Component {
-    constructor(props: any) {
-        super(props);
-    }
-
-    render() {
-        const elements = [
-            { data: { id: 'one', label: 'Node 1' }, position: { x: 0, y: 0 } },
-            { data: { id: 'two', label: 'Node 2' }, position: { x: 100, y: 0 } },
-            { data: { source: 'one', target: 'two', label: 'Edge from Node1 to Node2' } }
-        ];
-
-        return <CytoscapeComponent elements={elements} style={{ width: '600px', height: '600px' }} />;
-    }
-}
+import CytoscapeComponent from "react-cytoscapejs";
 
 
 const MindWindow = () => {
@@ -40,6 +22,7 @@ const MindWindow = () => {
     const update = hc.addCanvasHaikuNode
 
 
+
     const updateHandler = async () => {
         try {
             console.log(hc);
@@ -49,6 +32,13 @@ const MindWindow = () => {
             console.log(error)
         }
     }
+    const elements = [
+        { data: { id: "one", label: "Node 1" }, position: { x: 0, y: 0 } },
+        { data: { id: "two", label: "Node 2" }, position: { x: 100, y: 0 } },
+        {
+            data: { source: "one", target: "two", label: "Edge from Node1 to Node2" }
+        }
+    ];
 
     useEffect(() => {
         const wwindow = windowRef.current;
@@ -170,10 +160,10 @@ const MindWindow = () => {
         setMyCanvas(canvasDb[canvasIndex]);
     }
 
-
-    //ReactDOM.render(React.createElement(MyApp, document.getElementById('cy')));
-
+    // create Cy instance
+    //
     return (
+
         <div id="desktop" className="bg desktop">
             <div ref={windowRef} id="window" className="window">
                 <div ref={titleRef} className="title no-select" id="windowTitle">
@@ -187,31 +177,27 @@ const MindWindow = () => {
                 <div className="p-12 content overflow-y-auto">
                     <h1>MindWindow Explorer</h1>
                     Canvas: {myCanvas.title}<br />
-                    Owner: {myCanvas.owner?.substring(0, 7)}
+                    Owner: {myCanvas.owner?.substring(0, 7)}<br />
+                    Haiku: {myCanvas.canvas.node[0].haikipu.haiku}
 
-                    <div className="canvas">
-                        <div id="cy" />
-                        {myCanvas.canvas.node && myCanvas.canvas.node.map((node, index) => {
-                            return (
-
-                                <div className="p-2 border-2 text-sm h-1/3 w-1/3 top-0 left-0 relative backdrop-blur-2xl">
-                                    <h1>{node.id?.substring(0, 12)}</h1>
-                                    <p>{node.haikipu?.title}</p>
-                                    <p>{node.type}</p>
-                                    <p>{node.haikipu.haiku}</p>
-
-                                </div>
-                            )
-                        })}
-
+                    <div className="relative">
+                        <CytoscapeComponent
+                            elements={CytoscapeComponent.normalizeElements(elements)}
+                            style={{ width: "600px", height: "600px" }}
+                        />
                     </div>
+
+
+
+
                     <button onClick={handleCanvas} className="btn btn-primary">Change Canvas</button>
                     <button onClick={updateHandler} className="btn btn-primary">Update Canvas</button>
                 </div>
             </div>
-        </div>
+        </div >
 
     );
+}
 
-};
+
 export default MindWindow;
