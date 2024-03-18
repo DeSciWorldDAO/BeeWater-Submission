@@ -11,7 +11,12 @@ import toast from "react-hot-toast";
 import CytoscapeComponent from "react-cytoscapejs";
 
 
+
+
 const MindWindow = () => {
+
+
+
     const [canvasIndex, setCanvasIndex] = useState(0);
     const { setMyCanvas, myCanvas, canvasDb } = useGlobalState();
     const windowRef = useRef<HTMLDivElement>(null);
@@ -33,7 +38,7 @@ const MindWindow = () => {
         }
     }
     const elements = [
-        { data: { id: "one", label: "Node 1" }, position: { x: 0, y: 0 } },
+        { data: { id: "one", label: `${myCanvas.canvas?.node[0].haikipu.haiku}` }, position: { x: 0, y: 0 } },
         { data: { id: "two", label: "Node 2" }, position: { x: 100, y: 0 } },
         {
             data: { source: "one", target: "two", label: "Edge from Node1 to Node2" }
@@ -160,7 +165,8 @@ const MindWindow = () => {
         setMyCanvas(canvasDb[canvasIndex]);
     }
 
-    // create Cy instance
+    const layout = { name: 'edgehandles' };   // create Cy instance
+
     //
     return (
 
@@ -178,12 +184,12 @@ const MindWindow = () => {
                     <h1>MindWindow Explorer</h1>
                     Canvas: {myCanvas.title}<br />
                     Owner: {myCanvas.owner?.substring(0, 7)}<br />
-                    Haiku: {myCanvas.canvas.node[0].haikipu.haiku}
+                    Haiku: {myCanvas.canvas?.node[0].haikipu.haiku}
 
-                    <div className="relative">
+                    <div className="relative h-[500px] w-[500px]">
                         <CytoscapeComponent
                             elements={CytoscapeComponent.normalizeElements(elements)}
-                            style={{ width: "600px", height: "600px" }}
+                            style={{ width: "100%", height: "100%" }}
                         />
                     </div>
 
