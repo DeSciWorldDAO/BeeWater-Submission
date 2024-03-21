@@ -7,41 +7,12 @@ import "~~/styles/styles.css";
 import "~~/styles/window.css";
 import { useGlobalState } from "~~/services/store/store";
 import { HaikuCanvas } from "~~/app/haiku";
-import CytoscapeComponent from "react-cytoscapejs";
-import cytoscape from "cytoscape";
-import coseBilkent from 'cytoscape-cose-bilkent';
-import cytoscapePopper from 'cytoscape-popper';
-import tippy from 'tippy.js';
-import { ComputePositionConfig } from '@floating-ui/dom';
-import { KnowledgeGraph } from "~~/components/KnowledgeGraph";
+import KGDisplay from "~~/components/KGDisplay";
+
 import toast from "react-hot-toast";
 
 
-declare module 'cytoscape-popper' {
-    interface PopperOptions extends ComputePositionConfig {
-    }
-    interface PopperInstance {
-        update(): void;
-    }
-}
-type NodeProps = {
-    id: string;
-    name: string; // 节点名称
-    type: string; // 节点类型
-    hasMore: boolean; // 是否有子节点
-    direction: "root" | "inside" | "outside";
-};
-type EdgeProps = {
-    id: string; // 边id
-    fromId: string;
-    toId: string;
-    description: string;
-};
-type explore = (id: React.Key) => Promise<{
-    inside: Node.NodeProps[];
-    outside: Node.NodeProps[];
-    edge: Edge.EdgeProps[];
-}>;
+
 
 
 const MindWindow = () => {
@@ -70,30 +41,6 @@ const MindWindow = () => {
     }
 
 
-    const baseUrl = "http://localhost:3000";
-    const getNode = async (id: string, direction: "inside" | "outside") => {
-        //const res = await fetch(`${baseUrl}/api/${direction}/${id}`);
-        const data = { id: "node-1", name: "Node 1", type: "data", hasMore: true, direction: "inside" };
-        return data;
-    };
-
-    const getEdge = async (id: string) => {
-        const res = await fetch(`${baseUrl}/api/edge/${id}`);
-        const data = await res.json();
-        return data;
-    };
-
-    const explore = async (id: string, node: NodeProps) => {
-        const results = Promise.all([
-            getNode(id, "inside"),
-            getNode(id, "outside"),
-            getEdge(id),
-        ]);
-        const data = await results;
-        return { inside: data[0], outside: data[1], edges: data[2] };
-    };
-
-    const [basicDistence, setBasicDistence] = useState<number>(80);
 
     useEffect(() => {
         const wwindow = windowRef.current;
@@ -237,74 +184,7 @@ const MindWindow = () => {
                     Haiku: {myCanvas.canvas?.node[0].haikipu.haiku}
 
                     <div className="relative h-[500px] w-[500px] border-2">
-                        <KnowledgeGraph
-                            explore={explore}
-                            basicDistence={basicDistence}
-                            width={"100%"}
-                            height={"99vh"}
-                            position={{ x: 300, y: 300 }}
-                            onClickAddon={(node: any) => {
-                                toast.success("addon" + node.id);
-                            }}
-                            onClickInfo={(node: any) => {
-                                toast.success("info" + node.id);
-                            }}
-                            style={{ background: "#fff", color: "#000" }}
-                            node={{
-                                id: "node-0",
-                                type: "Node0",
-                                hasMore: true,
-                                direction: "root",
-                                name: "First Node in the Pack",
-                            }
-                            }
-
-
-                            onExploreEnd={() => {
-                                toast.success("已经到尾节点了!");
-                            }}
-                            edgeConfig={{
-                                hoveredColor: "#e27272",
-                                stroke: "#DEDEDE",
-                                strokeWidth: 1,
-                            }}
-                            typeConfig={{
-                                根节点: {
-                                    radius: 20,
-                                    fill: "#747ba6",
-                                    hoverStyle: {
-                                        fill: "#3949a3",
-                                    },
-                                },
-                                model: {
-                                    radius: 15,
-                                    fill: "#b4e5a2",
-                                    typeSize: 8,
-                                    nameSize: 8,
-                                    hoverStyle: {
-                                        fill: "#6be73e",
-                                    },
-                                },
-                                data: {
-                                    radius: 15,
-                                    fill: "#ea52ea",
-                                    typeSize: 8,
-                                    nameSize: 8,
-                                    hoverStyle: {
-                                        fill: "#e5a2e5",
-                                    },
-                                },
-                                test: {
-                                    radius: 13,
-                                    fill: "#89c4fb",
-                                    typeSize: 8,
-                                    nameSize: 8,
-                                    hoverStyle: {
-                                        fill: "#2f8fe8",
-                                    },
-                                },
-                            }}
-                        />
+                        <KGDisplay />
                     </div>
 
 
